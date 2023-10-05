@@ -8,7 +8,7 @@
         /* Définir la taille de la carte */
         #map {
             width: 100%; /* Utilisation de la largeur totale de la page */
-            height: 600px; /* Hauteur fixe de la carte (ajustez au besoin) */
+            height: 800px; /* Hauteur fixe de la carte (ajustez au besoin) */
         }
     </style>
 </head>
@@ -26,16 +26,25 @@
         // Définir la taille de l'image en pixels (largeur x hauteur)
         var imageSize = [1536, 2048]; // Dimensions de votre image
 
+        // Calculer le rapport d'aspect de l'image
+        var aspectRatio = imageSize[0] / imageSize[1];
+
+        // Calculer les nouvelles dimensions de bounds pour conserver les proportions de l'image
+        var newBounds = [
+            [bounds[0][0], bounds[0][0] + (bounds[1][1] - bounds[0][1]) / aspectRatio],
+            [bounds[1][0], bounds[1][1]]
+        ];
+
         // Ajouter l'image comme fond de carte avec les proportions conservées
-        L.imageOverlay('https://raw.githubusercontent.com/Crispyray/crispyray.github.io/main/images/alarian2.png', bounds, {
+        L.imageOverlay('https://raw.githubusercontent.com/Crispyray/crispyray.github.io/main/images/alarian2.png', newBounds, {
             opacity: 1, // Opacité de l'image (1 signifie complètement visible)
             interactive: true, // Permettre l'interaction avec l'image
             attribution: '© Votre attribution ici' // Attribution de l'image (si nécessaire)
         }).addTo(map);
 
-        // Ajuster la taille de la carte en fonction de la taille de l'image
-        map.setMaxBounds(bounds);
-        map.fitBounds(bounds);
+        // Ajuster la taille de la carte en fonction des nouvelles dimensions de bounds
+        map.setMaxBounds(newBounds);
+        map.fitBounds(newBounds);
 
         // Ajouter des contrôles (optionnel)
         L.control.scale().addTo(map);
