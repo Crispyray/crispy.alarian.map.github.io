@@ -22,10 +22,17 @@
         // Initialiser la carte
         var map = L.map('map').setView([0, 0], 1); // Coordonnées initiales et zoom
 
+        // Définir les dimensions de l'image avec le bon rapport d'aspect
+        var imageWidth = 2500;
+        var imageHeight = 3250;
+
+        // Calculer le rapport d'aspect
+        var aspectRatio = imageWidth / imageHeight;
+
         // Ajouter l'image comme fond de carte
         L.imageOverlay('https://raw.githubusercontent.com/Crispyray/crispyray.github.io/main/images/alarian.jpg', [
-            [-1625, -1250],
-            [1625, 1250]
+            [-((imageHeight / 2) / aspectRatio), -(imageWidth / 2)],
+            [((imageHeight / 2) / aspectRatio), (imageWidth / 2)]
         ]).addTo(map);
 
         // Changer l'échelle (métrique) de la carte (facultatif)
