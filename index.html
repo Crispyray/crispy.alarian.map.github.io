@@ -2,13 +2,15 @@
 <html>
 <head>
     <title>Ma Carte Interactive</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <style>
-        /* Définir la taille de la carte */
+        /* Définir la taille de la carte à 80% de la largeur de l'écran */
         #map {
-            width: 100%; /* Utilisation de la largeur totale de la page */
-            height: 800px; /* Hauteur fixe de la carte (ajustez au besoin) */
+            width: 80vw; /* Utilisation de 80% de la largeur de la vue */
+            height: 80vh; /* Utilisation de 80% de la hauteur de la vue */
+            margin: auto; /* Centrer la carte horizontalement */
         }
     </style>
 </head>
@@ -18,39 +20,20 @@
 
     <script>
         // Initialiser la carte
-        var map = L.map('map').setView([0, 0], 2); // Coordonnées initiales et zoom
+        var map = L.map('map').setView([0, 0], 1); // Coordonnées initiales et zoom
 
-        // Définir les coordonnées de la zone géographique que l'image doit couvrir
-        var bounds = [[-90, -180], [90, 180]];
+        // Ajouter l'image comme fond de carte
+        L.imageOverlay('https://raw.githubusercontent.com/Crispyray/crispyray.github.io/main/images/alarian.jpg', [
+            [-1625, -1250],
+            [1625, 1250]
+        ]).addTo(map);
 
-        // Définir la taille de l'image en pixels (largeur x hauteur)
-        var imageSize = [2500, 3250]; // Dimensions de votre image
-
-        // Calculer le rapport d'aspect de l'image
-        var aspectRatio = imageSize[0] / imageSize[1];
-
-        // Calculer les nouvelles dimensions de bounds pour conserver les proportions de l'image
-        var newBounds = [
-            [bounds[0][0], bounds[0][0] + (bounds[1][1] - bounds[0][1]) / aspectRatio],
-            [bounds[1][0], bounds[1][1]]
-        ];
-
-        // Ajouter l'image comme fond de carte avec les proportions conservées
-        L.imageOverlay('https://raw.githubusercontent.com/Crispyray/crispyray.github.io/main/images/alarian.png', newBounds, {
-            opacity: 1, // Opacité de l'image (1 signifie complètement visible)
-            interactive: true, // Permettre l'interaction avec l'image
-            attribution: '© Votre attribution ici' // Attribution de l'image (si nécessaire)
-        }).addTo(map);
-
-        // Ajuster la taille de la carte en fonction des nouvelles dimensions de bounds
-        map.setMaxBounds(newBounds);
-        map.fitBounds(newBounds);
-
-        // Ajouter des contrôles (optionnel)
+        // Changer l'échelle (métrique) de la carte (facultatif)
         L.control.scale().addTo(map);
-        L.control.zoom().addTo(map);
 
-        // Vous pouvez ajouter d'autres éléments à votre carte ici (marqueurs, polygones, etc.)
+        // Changer la valeur de zoom de départ
+        map.setZoom(2); // Vous pouvez ajuster cette valeur selon vos préférences
+
     </script>
 </body>
 </html>
