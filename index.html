@@ -40,10 +40,10 @@
         // Calculer le rapport d'aspect
         var aspectRatio = imageWidth / imageHeight;
 
-        // Ajouter l'image comme fond de carte
+        // Ajouter l'image comme fond de carte avec des coordonnées ajustées
         L.imageOverlay('https://raw.githubusercontent.com/Crispyray/crispyray.github.io/main/images/alarian.jpg', [
-            [-90 * aspectRatio, -180],
-            [90 * aspectRatio, 180]
+            [-210 * aspectRatio, -140],
+            [210 * aspectRatio, 140]
         ]).addTo(map);
 
         // Changer l'échelle (métrique) de la carte (facultatif)
@@ -59,10 +59,10 @@
         zoomDisplay.addTo(map);
 
         // Changer la valeur de zoom de départ
-        map.setZoom(2); // Vous pouvez ajuster cette valeur selon vos préférences
+        map.setZoom(1); // Vous pouvez ajuster cette valeur selon vos préférences
 
         // Changer l'incrémentation du zoom
-        map.options.zoomDelta = 0.5; // Vous pouvez ajuster cette valeur selon vos préférences
+        map.options.zoomDelta = 0.1; // Vous pouvez ajuster cette valeur selon vos préférences
 
         // Mettre à jour l'affichage du zoom lorsque le zoom change
         map.on('zoomend', function () {
