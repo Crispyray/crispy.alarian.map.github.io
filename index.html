@@ -42,8 +42,8 @@
 
         // Ajouter l'image comme fond de carte
         L.imageOverlay('https://raw.githubusercontent.com/Crispyray/crispyray.github.io/main/images/alarian.jpg', [
-            [-90, -180 / aspectRatio],
-            [90, 180 / aspectRatio]
+            [-90 * aspectRatio, -180],
+            [90 * aspectRatio, 180]
         ]).addTo(map);
 
         // Changer l'échelle (métrique) de la carte (facultatif)
