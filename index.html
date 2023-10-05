@@ -12,11 +12,22 @@
             height: 80vh; /* Utilisation de 80% de la hauteur de la vue */
             margin: auto; /* Centrer la carte horizontalement */
         }
+
+        /* Style pour l'affichage du zoom */
+        .leaflet-control-zoom-display {
+            background: white;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
     <!-- Conteneur pour la carte -->
     <div id="map"></div>
+
+    <!-- Contrôle d'affichage du zoom -->
+    <div class="leaflet-control-zoom-display" id="zoom-display">Zoom: 2</div>
 
     <script>
         // Initialiser la carte
@@ -38,8 +49,25 @@
         // Changer l'échelle (métrique) de la carte (facultatif)
         L.control.scale().addTo(map);
 
+        // Contrôle d'affichage du zoom
+        var zoomDisplay = L.control({ position: 'topright' });
+        zoomDisplay.onAdd = function (map) {
+            var div = L.DomUtil.create('div', 'leaflet-control-zoom-display');
+            div.innerHTML = 'Zoom: ' + map.getZoom();
+            return div;
+        };
+        zoomDisplay.addTo(map);
+
         // Changer la valeur de zoom de départ
         map.setZoom(2); // Vous pouvez ajuster cette valeur selon vos préférences
+
+        // Changer l'incrémentation du zoom
+        map.options.zoomDelta = 0.5; // Vous pouvez ajuster cette valeur selon vos préférences
+
+        // Mettre à jour l'affichage du zoom lorsque le zoom change
+        map.on('zoomend', function () {
+            document.getElementById('zoom-display').innerHTML = 'Zoom: ' + map.getZoom();
+        });
 
     </script>
 </body>
