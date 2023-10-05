@@ -7,7 +7,8 @@
     <style>
         /* Définir la taille de la carte */
         #map {
-            height: 500px;
+            width: 100%; /* Utilisation de la largeur totale de la page */
+            height: 600px; /* Hauteur fixe de la carte (ajustez au besoin) */
         }
     </style>
 </head>
@@ -19,8 +20,22 @@
         // Initialiser la carte
         var map = L.map('map').setView([0, 0], 2); // Coordonnées initiales et zoom
 
-        // Ajouter l'image comme fond de carte
-        L.imageOverlay('https://raw.githubusercontent.com/Crispyray/crispyray.github.io/main/images/alarian2.png', bounds).addTo(map);
+        // Définir les coordonnées de la zone géographique que l'image doit couvrir
+        var bounds = [[-90, -180], [90, 180]];
+
+        // Définir la taille de l'image en pixels (largeur x hauteur)
+        var imageSize = [1536, 2048]; // Dimensions de votre image
+
+        // Ajouter l'image comme fond de carte avec les proportions conservées
+        L.imageOverlay('https://raw.githubusercontent.com/Crispyray/crispyray.github.io/main/images/alarian2.png', bounds, {
+            opacity: 1, // Opacité de l'image (1 signifie complètement visible)
+            interactive: true, // Permettre l'interaction avec l'image
+            attribution: '© Votre attribution ici' // Attribution de l'image (si nécessaire)
+        }).addTo(map);
+
+        // Ajuster la taille de la carte en fonction de la taille de l'image
+        map.setMaxBounds(bounds);
+        map.fitBounds(bounds);
 
         // Ajouter des contrôles (optionnel)
         L.control.scale().addTo(map);
@@ -30,3 +45,5 @@
     </script>
 </body>
 </html>
+
+     //   L.imageOverlay('https://raw.githubusercontent.com/Crispyray/crispyray.github.io/main/images/alarian2.png', bounds).addTo(map);
