@@ -15,22 +15,33 @@
             height: 80vh; /* 80% de la hauteur de l'écran */
             margin: 0 auto;
         }
+        #coordinates {
+            position: absolute;
+            bottom: 10px; /* Position en bas de l'écran */
+            left: 10px;
+            background-color: white;
+            padding: 5px;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 5px #888;
+        }
     </style>
 </head>
 <body>
     <!-- Créer une div pour la carte -->
     <div id="map"></div>
 
+    <!-- Afficher les coordonnées de la souris en bas de l'écran -->
+    <div id="coordinates">Coordonnées de la souris : </div>
+
     <script>
         // Initialiser la carte
         var map = L.map('map',{
-        // Définir les paramètres de zoom
-       zoomSnap : 0.25,
-       zoomDelta : 0.51,
-       
-       wheelPxPerZoomLevel : 600        
-        });//.setView([0, 0], 1); // Coordonnées initiales et niveau de zoom initial
-				
+            // Définir les paramètres de zoom
+            zoomSnap : 0.25,
+            zoomDelta : 0.51,
+            wheelPxPerZoomLevel : 600        
+        });
+
         // Ajouter une couche d'image
         var imageUrl = 'https://raw.githubusercontent.com/Crispyray/crispyray.github.io/main/images/alarian.jpg';
         var imageBounds = [[-8.7, -6], [8.7,6]]; // Plage pour les proportions L.imageOverlay
@@ -40,7 +51,34 @@
         // Ajouter une échelle de distances à la carte
         L.control.scale({ imperial: false }).addTo(map);
 
-        
+        // Afficher les coordonnées de la souris en temps réel
+        var coordinatesDiv = document.getElementById('coordinates');
+        map.on('mousemove', function(event) {
+            var lat = event.latlng.lat.toFixed(6);
+            var lng = event.latlng.lng.toFixed(6);
+            coordinatesDiv.innerHTML = 'Coordonnées de la souris : ' + lat + ', ' + lng;
+        });
+
+        // Ajouter des points d'intérêt (marqueurs)
+        var pointsOfInterest = [
+            {
+                name: "Point 1",
+                latlng: [0.5, 2.0],
+                description: "Informations sur le point 1."
+            },
+            {
+                name: "Talbeth-Hav",
+                latlng: [1.864, -1.967],
+                description: "Informations sur le point 2."
+            },
+            // Ajoutez d'autres points d'intérêt ici...
+        ];
+
+        pointsOfInterest.forEach(function(point) {
+            var marker = L.marker(point.latlng).addTo(map);
+            marker.bindTooltip(point.name).openTooltip();
+            marker.bindPopup(point.description);
+        });
 
         // Afficher la carte
         map.fitBounds(imageBounds); // Ajuster la carte à la taille de l'image
