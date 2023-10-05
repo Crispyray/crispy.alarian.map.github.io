@@ -24,7 +24,7 @@
         var bounds = [[-90, -180], [90, 180]];
 
         // Définir la taille de l'image en pixels (largeur x hauteur)
-        var imageSize = [1536, 2048]; // Dimensions de votre image (1440x1920)
+        var imageSize = [2500, 3250]; // Dimensions de votre image (1440x1920)
 
         // Calculer le rapport d'aspect de l'image
         var aspectRatio = imageSize[0] / imageSize[1];
@@ -36,7 +36,7 @@
         ];
 
         // Ajouter l'image comme fond de carte avec les proportions conservées
-        L.imageOverlay('https://raw.githubusercontent.com/Crispyray/crispyray.github.io/main/images/alarian2.png', newBounds, {
+        L.imageOverlay('https://raw.githubusercontent.com/Crispyray/crispyray.github.io/main/images/alarian.png', newBounds, {
             opacity: 1, // Opacité de l'image (1 signifie complètement visible)
             interactive: true, // Permettre l'interaction avec l'image
             attribution: '© Votre attribution ici' // Attribution de l'image (si nécessaire)
