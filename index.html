@@ -7,8 +7,8 @@
     <style>
         /* Définir la taille de la carte */
         #map {
-            width: 80%; /* Utilisation de la largeur totale de la page */
-            height: 80%; /* Hauteur fixe de la carte (ajustez au besoin) */
+            width: 100%; /* Utilisation de la largeur totale de la page */
+            height: 800px; /* Hauteur fixe de la carte (ajustez au besoin) */
         }
     </style>
 </head>
@@ -24,7 +24,7 @@
         var bounds = [[-90, -180], [90, 180]];
 
         // Définir la taille de l'image en pixels (largeur x hauteur)
-        var imageSize = [2500, 3250]; // Dimensions de votre image (1440x1920)
+        var imageSize = [2500, 3250]; // Dimensions de votre image
 
         // Calculer le rapport d'aspect de l'image
         var aspectRatio = imageSize[0] / imageSize[1];
