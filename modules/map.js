@@ -1,11 +1,4 @@
 //----map Module----//
-// Importer la bibliothèque Leaflet
-import 'leaflet/dist/leaflet.css';
-import L from 'leaflet';
-
-// Importer la bibliothèque Leaflet Measure Control
-import 'leaflet-measure';
-
 // Fonction pour initialiser la carte
 export function initializeMap() {
     const map = L.map('map', {
@@ -65,4 +58,5 @@ export function displayMap() {
     image.addTo(map);
     map.setZoom(6.25);
 }
+
 
