@@ -1,3 +1,5 @@
+//Import de la variable L de leaflet
+import * as L from 'leaflet';
 // Fonction pour initialiser la carte
 export function initializeMap() {
     var map = L.map('map', {
