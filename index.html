@@ -37,6 +37,12 @@
     <div id="coordinates">Coordonnées de la souris : </div>
 
     <script>
+        // Tableau de chemins d'images d'en-tête
+        var imagePaths = {
+            talbethHav: './images/Entete-TalbethHav.png',
+            qereanHav: './images/Entete-QereanHav.png',
+        // Ajoutez d'autres chemins d'images ici...
+};
         // Tableau de points d'intérêt
         var pointsOfInterest = [
             {
@@ -47,12 +53,12 @@
             {
                 name: "Talbeth-Hav",
                 latlng: [1.864, -1.967],
-                description: "Informations sur le point 2."
+                description: '<img src="' + imagePaths.talbethHav + '">Informations sur le point 2.'
             },
             {
                 name: "Qerean-Hav",
                 latlng: [3.87, -2.712],
-                description: "Aventure : \"La Nef des Ombres\"."
+                description: '<img src="' + imagePaths.qereanHav + '">Aventure : \"La Nef des Ombres\".'
             },
             {
                 name: "Kelgen",
