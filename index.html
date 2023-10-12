@@ -3,20 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carte Interactive</title>
-
+    <title>Testing Carte H&D Alarian</title>
     <!-- Inclure Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <!-- Inclure Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <!-- Inclure Leaflet mesure de distance -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-measure@2.1.6/leaflet-measure.css" />
 
+    <!-- Définir la largeur et la hauteur de la carte -->
     <style>
         #map {
-            width: 80%;
-            height: 80vh;
+            width: 95%;
+            height: 90vh; /* 80% de la hauteur de l'écran */
             margin: 0 auto;
         }
         #coordinates {
             position: absolute;
-            bottom: 10px;
+            bottom: 10px; /* Position en bas de l'écran */
             left: 10px;
             background-color: white;
             padding: 5px;
@@ -26,71 +30,73 @@
     </style>
 </head>
 <body>
-    <!-- Div pour afficher les coordonnées de la souris -->
-    <div id="coordinates">Coordonnées de la souris : </div>
-    
-    <!-- Div pour afficher la carte -->
+    <!-- Créer une div pour la carte -->
     <div id="map"></div>
 
-    <!-- Inclure Leaflet JavaScript -->
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-    
-    <script type="module">
-        // Fonction pour initialiser la carte
-        function initializeMap() {
-            var map = L.map('map', {
-                zoomSnap: 0.25,
-                zoomDelta: 0.51,
-                wheelPxPerZoomLevel: 600
-            });
-            return map;
-        }
-        
-        // Fonction pour ajouter une image à la carte
-        function addImageToMap(map) {
-            var imageUrl = './images/alarian.jpg';
-            var imageBounds = [[-8.7, -6], [8.7, 6]];
-            var image = L.imageOverlay(imageUrl, imageBounds).addTo(map);
-        }
-        
-        // Fonction pour ajouter des points d'intérêt
-        function addPointsOfInterest(map) {
-            var pointsOfInterest = [
-                {
-                    name: "Point 1",
-                    latlng: [0.5, 2.0],
-                    description: "Informations sur le point 1."
-                }
-                // Ajoutez d'autres points d'intérêt ici...
-            ];
-        
-            pointsOfInterest.forEach(function(point) {
-                var marker = L.marker(point.latlng).addTo(map);
-                marker.bindTooltip(point.name).openTooltip();
-                marker.bindPopup(point.description);
-            });
-        }
-        
-        // Fonction pour afficher la carte
-        function displayMap() {
-            var map = initializeMap();
-            addImageToMap(map);
-            addPointsOfInterest(map);
-        
-            var coordinatesDiv = document.getElementById('coordinates');
-            map.on('mousemove', function(event) {
-                var lat = event.latlng.lat.toFixed(6);
-                var lng = event.latlng.lng.toFixed(6);
-                coordinatesDiv.innerHTML = 'Coordonnées de la souris : ' + lat + ', ' + lng;
-            });
-        
-            map.fitBounds(image.getBounds());
-            image.addTo(map);
-            map.setZoom(6.25);
-        }
-        
-        // Appel de la fonction pour afficher la carte
-        displayMap();
+    <!-- Afficher les coordonnées de la souris en bas de l'écran -->
+    <div id="coordinates">Coordonnées de la souris : </div>
+
+    <script>
+        // Initialiser la carte
+        var map = L.map('map',{
+            // Définir les paramètres de zoom
+            zoomSnap : 0.25,
+            zoomDelta : 0.51,
+            wheelPxPerZoomLevel : 600        
+        });
+
+        // Ajouter une couche d'image
+        var imageUrl = './images/alarian.jpg';
+        var imageBounds = [[-8.7, -6], [8.7,6]]; // Plage pour les proportions L.imageOverlay
+
+        var image = L.imageOverlay(imageUrl, imageBounds).addTo(map);
+
+        // Ajouter une échelle de distances à la carte
+        L.control.scale({ imperial: false }).addTo(map);
+
+        // Afficher les coordonnées de la souris en temps réel
+        var coordinatesDiv = document.getElementById('coordinates');
+        map.on('mousemove', function(event) {
+            var lat = event.latlng.lat.toFixed(6);
+            var lng = event.latlng.lng.toFixed(6);
+            coordinatesDiv.innerHTML = 'Coordonnées de la souris : ' + lat + ', ' + lng;
+        });
+
+        // Ajouter des points d'intérêt (marqueurs)
+        var pointsOfInterest = [
+            {
+                name: "Point 1",
+                latlng: [0.5, 2.0],
+                description: "Informations sur le point 1."
+            },
+            {
+                name: "Talbeth-Hav",
+                latlng: [1.864, -1.967],
+                description: "Informations sur le point 2."
+            }, 
+            {
+                name: "Qerean-Hav",
+                latlng: [3.87, -2.712],
+                description: "Aventure : \"La Nef des Ombres\"."
+            },
+            {
+                name: "Kelgen",
+                latlng: [2.922, -1.983],
+                description: "Village où les aventuriers ont élu domicile <br> Aventure : \"Le Miroir Brisé\"."
+            },
+            // Ajoutez d'autres points d'intérêt ici...
+        ];
+
+        pointsOfInterest.forEach(function(point) {
+            var marker = L.marker(point.latlng).addTo(map);
+            marker.bindTooltip(point.name).openTooltip();
+            marker.bindPopup(point.description);
+        });
+
+        // Afficher la carte
+        map.fitBounds(imageBounds); // Ajuster la carte à la taille de l'image
+        image.addTo(map); // Ajouter l'image à la carte
+        map.setZoom(6.25);
     </script>
 </body>
 </html>
