@@ -36,22 +36,38 @@
             kelgen: './images/Entetes-Kelgen.jpg',
             // Ajoutez d'autres chemins d'images ici...
         };
+        var cityIcon = L.icon({
+            iconUrl: './images/IcoVille.png',
+            iconSize: [62, 64],
+            iconAnchor: [16, 32],
+            popupAnchor: [0, -32]
+        });
 
+        // Créer une icône pour les lieux-dits
+        var landmarkIcon = L.icon({
+            iconUrl: './images/IcoEye.png',
+            iconSize: [51, 36],
+            iconAnchor: [16, 32],
+            popupAnchor: [0, -32]
+        });
         var cities = [
             {
                 name: "Talbeth-Hav",
                 latlng: [1.864, -1.967],
-                description: '<img src="' + imagePaths.talbethHav + '"><br>Chef-lieu de l’Ystaad, Talbeth-Hav est aussi la capitale du royaume d’Alarian. Ses habitants sont appelés les Talbethiens et Talbethiennes.'
+                description: '<img src="' + imagePaths.talbethHav + '"><br>Chef-lieu de l’Ystaad, Talbeth-Hav est aussi la capitale du royaume d’Alarian. Ses habitants sont appelés les Talbethiens et Talbethiennes.',
+                icon: cityIcon
             },
             {
                 name: "Qerean-Hav",
                 latlng: [3.87, -2.712],
-                description: '<img src="' + imagePaths.qereanHav + '"><br>Aventure : \"La Nef des Ombres\".'
+                description: '<img src="' + imagePaths.qereanHav + '"> <br>Aventure : \"La Nef des Ombres\".',
+                icon: cityIcon
             },
             {
                 name: "Kelgen",
                 latlng: [2.922, -1.983],
-                description: "<img src="' + imagePaths.kelgen + '"><br>Village où les aventuriers ont élu domicile <br> Aventure : \"Le Miroir Brisé\"."
+                description: '<img src="' + imagePaths.kelgen + '"> <br>Village où les aventuriers ont élu domicile <br> Aventure : \"Le Miroir Brisé\".',
+                icon: cityIcon
             }
             // Ajoutez d'autres villes ici...
         ];
@@ -60,12 +76,14 @@
             {
                 name: "Point 1",
                 latlng: [0.5, 2.0],
-                description: "<br>Informations sur le point 1."
+                description: "<br>Informations sur le point 1.",
+                icon: landmarkIcon
             },
             {
                 name: "La Candelle",
                 latlng: [3.867, -2.605],
-                description: '<img src="' + imagePaths.candelle + '"><br>Aventure : \"La Nef des Ombres\".<br>La candelle est un pic rocheux à flanc de falaise, son accès est difficile car dans l\'estuaire la mer est mauvaise, peu connaissent son existance.'
+                description: '<img src="' + imagePaths.candelle + '"><br>Aventure : \"La Nef des Ombres\".<br>La candelle est un pic rocheux à flanc de falaise, son accès est difficile car dans l\'estuaire la mer est mauvaise, peu connaissent son existance.',
+                icon: landmarkIcon
             },
             // Ajoutez d'autres lieux-dits ici...
         ];
