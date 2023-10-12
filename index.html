@@ -4,11 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Testing Carte H&D Alarian</title>
-    <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-        <!-- Inclure Leaflet.Measure CSS et JavaScript -->
-    <link rel="stylesheet" type="text/css" href="./leafletMeasure/leaflet-measure.css" />
-    <script src="./leafletMeasure/leaflet-measure.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  
+ <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    
+<!-- <script src="https://unpkg.com/leaflet-measure@2.1.5/leaflet-measure.js"></script>
+ <link rel="stylesheet" href="https://unpkg.com/leaflet-measure@2.1.5/leaflet-measure.css" /> -->
+
 
     <style>
         #map {
@@ -69,7 +71,7 @@
             {
                 name: "Kelgen",
                 latlng: [2.922, -1.983],
-                description: '<img src="' + imagePaths.kelgen + '"> <br>Kelgen est une petite ville ou un grand village...<br> Pittoresque, avec sa place du marché, ces parcs et allentours verdurés/verdoyants, ses quelques auberges réputées (dont celle du \"Faisant Doré\")...<br> c\'est tout naturellement que nos aventuriers y ont élu domicile <br><br> Aventure : \"Le Miroir Brisé\".'
+                description: '<img src="' + imagePaths.kelgen + '"> <br>Kelgen est une petite ville ou un grand village. Pittoresque, avec sa place du marché et ses quelques auberges réputées (dont celle du \"Faisant Doré\"), ces parcs et allentours verdurés/verdoyants...<br> c\'est tout naturellement que nos aventuriers y ont élu domicile <br><br> Aventure : \"Le Miroir Brisé\".'
            
             }
             // Ajoutez d'autres villes ici...
@@ -127,9 +129,6 @@
         addPointsOfInterestToGroup(cities, citiesGroup,cityIcon);
         addPointsOfInterestToGroup(landmarks, landmarksGroup,landmarkIcon);
 
-         // Activer le plugin de mesure
-        L.control.measure({ position: 'topleft' }).addTo(map);
-
         map.fitBounds(imageBounds);
         image.addTo(map);
         map.setZoom(7.25);
@@ -138,6 +137,14 @@
             "Villes": citiesGroup,
             "Lieux-Dits": landmarksGroup
         }).addTo(map);
+
+                // Ajouter l'outil de mesure
+      /*  L.control.measure({
+            primaryLengthUnit: 'meters', // Unité de mesure par défaut
+            secondaryLengthUnit: 'kilometers', // Unité de mesure secondaire
+            primaryAreaUnit: 'sqmeters', // Unité de mesure de surface par défaut
+            secondaryAreaUnit: 'hectares' // Unité de mesure de surface secondaire
+        }).addTo(map);*/
     </script>
 </body>
 </html>
