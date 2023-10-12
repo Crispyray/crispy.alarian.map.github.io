@@ -27,6 +27,14 @@
             border: 1px solid #ccc;
             box-shadow: 0 0 5px #888;
         }
+        /* Style personnalisé pour les popups */
+        .custom-popup {
+            width: 512px; /* Largeur personnalisée */
+            max-width: 512%; /* Ajuste automatiquement la largeur en fonction de la taille du contenu */
+            padding: 10px; /* Marge intérieure */
+            /*border: 2px solid #000; /* Bordure */
+            /*background-color: #fff; /* Couleur de fond */
+        }
     </style>
 </head>
 <body>
@@ -73,7 +81,7 @@
             points.forEach(function(point) {
                 var marker = L.marker(point.latlng).addTo(map);
                 marker.bindTooltip(point.name).openTooltip();
-                marker.bindPopup(point.description);
+                marker.bindPopup(point.description, { maxWidth: 512});
             });
         }
 
