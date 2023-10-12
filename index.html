@@ -39,7 +39,7 @@
         var cityIcon = L.icon({
             iconUrl: './images/IcoVille.png',
             iconSize: [62, 64],
-            iconAnchor: [16, 32],
+            iconAnchor: [5, 64],
             popupAnchor: [0, -32]
         });
 
@@ -47,27 +47,26 @@
         var landmarkIcon = L.icon({
             iconUrl: './images/IcoEye.png',
             iconSize: [51, 36],
-            iconAnchor: [16, 32],
+            iconAnchor: [5, 36],
             popupAnchor: [0, -32]
         });
         var cities = [
             {
                 name: "Talbeth-Hav",
                 latlng: [1.864, -1.967],
-                description: '<img src="' + imagePaths.talbethHav + '"><br>Chef-lieu de l’Ystaad, Talbeth-Hav est aussi la capitale du royaume d’Alarian. Ses habitants sont appelés les Talbethiens et Talbethiennes.',
-                icon: cityIcon
-            },
+                description: '<img src="' + imagePaths.talbethHav + '"><br>Chef-lieu de l’Ystaad, Talbeth-Hav est aussi la capitale du royaume d’Alarian. Ses habitants sont appelés les Talbethiens et Talbethiennes.'
+             },
             {
                 name: "Qerean-Hav",
                 latlng: [3.87, -2.712],
-                description: '<img src="' + imagePaths.qereanHav + '"> <br>Aventure : \"La Nef des Ombres\".',
-                icon: cityIcon
+                description: '<img src="' + imagePaths.qereanHav + '"> <br>Aventure : \"La Nef des Ombres\".'
+           
             },
             {
                 name: "Kelgen",
                 latlng: [2.922, -1.983],
-                description: '<img src="' + imagePaths.kelgen + '"> <br>Village où les aventuriers ont élu domicile <br> Aventure : \"Le Miroir Brisé\".',
-                icon: cityIcon
+                description: '<img src="' + imagePaths.kelgen + '"> <br>Village où les aventuriers ont élu domicile <br> Aventure : \"Le Miroir Brisé\".'
+           
             }
             // Ajoutez d'autres villes ici...
         ];
@@ -76,15 +75,15 @@
             {
                 name: "Point 1",
                 latlng: [0.5, 2.0],
-                description: "<br>Informations sur le point 1.",
-                icon: landmarkIcon
+                description: "<br>Informations sur le point 1."
+           
             },
             {
                 name: "La Candelle",
                 latlng: [3.867, -2.605],
-                description: '<img src="' + imagePaths.candelle + '"><br>Aventure : \"La Nef des Ombres\".<br>La candelle est un pic rocheux à flanc de falaise, son accès est difficile car dans l\'estuaire la mer est mauvaise, peu connaissent son existance.',
-                icon: landmarkIcon
-            },
+                description: '<img src="' + imagePaths.candelle + '"><br>Aventure : \"La Nef des Ombres\".<br>La candelle est un pic rocheux à flanc de falaise, son accès est difficile car dans l\'estuaire la mer est mauvaise, peu connaissent son existance.'
+          
+            }
             // Ajoutez d'autres lieux-dits ici...
         ];
 
@@ -112,17 +111,17 @@
             coordinatesDiv.innerHTML = 'Coordonnées de la souris : ' + lat + ', ' + lng;
         });
 
-        function addPointsOfInterestToGroup(points, group) {
+        function addPointsOfInterestToGroup(points, group, icon) {
             points.forEach(function(point) {
-                var marker = L.marker(point.latlng);
+                var marker = L.marker(point.latlng, { icon: icon });
                 marker.bindTooltip(point.name).openTooltip();
                 marker.bindPopup(point.description, { minWidth: 376, maxWidth: 376 });
                 marker.addTo(group);
             });
         }
 
-        addPointsOfInterestToGroup(cities, citiesGroup);
-        addPointsOfInterestToGroup(landmarks, landmarksGroup);
+        addPointsOfInterestToGroup(cities, citiesGroup,cityIcon);
+        addPointsOfInterestToGroup(landmarks, landmarksGroup,landmarkIcon);
 
         map.fitBounds(imageBounds);
         image.addTo(map);
