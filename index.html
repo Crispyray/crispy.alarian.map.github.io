@@ -81,7 +81,7 @@
             points.forEach(function(point) {
                 var marker = L.marker(point.latlng).addTo(map);
                 marker.bindTooltip(point.name).openTooltip();
-                marker.bindPopup(point.description, { maxWidth: 512});
+                marker.bindPopup(point.description, { minWidth : 512, maxWidth : 512});
             });
         }
 
