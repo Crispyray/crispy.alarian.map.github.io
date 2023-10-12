@@ -37,7 +37,43 @@
     <div id="coordinates">Coordonnées de la souris : </div>
 
     <script>
-        // Initialiser la carte
+        // Tableau de points d'intérêt
+        var pointsOfInterest = [
+            {
+                name: "Point 1",
+                latlng: [0.5, 2.0],
+                description: "Informations sur le point 1."
+            },
+            {
+                name: "Talbeth-Hav",
+                latlng: [1.864, -1.967],
+                description: "Informations sur le point 2."
+            },
+            {
+                name: "Qerean-Hav",
+                latlng: [3.87, -2.712],
+                description: "Aventure : \"La Nef des Ombres\"."
+            },
+            {
+                name: "Kelgen",
+                latlng: [2.922, -1.983],
+                description: "Village où les aventuriers ont élu domicile <br> Aventure : \"Le Miroir Brisé\"."
+            },
+            // Ajoutez d'autres points d'intérêt ici...
+        ];
+
+        // Fonction pour ajouter les points d'intérêt à la carte
+        function addPointsOfInterestToMap(map, points) {
+            points.forEach(function(point) {
+                var marker = L.marker(point.latlng).addTo(map);
+                marker.bindTooltip(point.name).openTooltip();
+                marker.bindPopup(point.description);
+            });
+        }
+
+        // Initialisation de la carte, gestion des coordonnées de la souris, etc.
+
+        // Appel de la fonction pour ajouter les points d'intérêt
         var map = L.map('map',{
             // Définir les paramètres de zoom
             zoomSnap : 0.25,
@@ -62,36 +98,8 @@
             coordinatesDiv.innerHTML = 'Coordonnées de la souris : ' + lat + ', ' + lng;
         });
 
-        // Ajouter des points d'intérêt (marqueurs)
-        var pointsOfInterest = [
-            {
-                name: "Point 1",
-                latlng: [0.5, 2.0],
-                description: "Informations sur le point 1."
-            },
-            {
-                name: "Talbeth-Hav",
-                latlng: [1.864, -1.967],
-                description: "Informations sur le point 2."
-            }, 
-            {
-                name: "Qerean-Hav",
-                latlng: [3.87, -2.712],
-                description: "Aventure : \"La Nef des Ombres\"."
-            },
-            {
-                name: "Kelgen",
-                latlng: [2.922, -1.983],
-                description: "Village où les aventuriers ont élu domicile <br> Aventure : \"Le Miroir Brisé\"."
-            },
-            // Ajoutez d'autres points d'intérêt ici...
-        ];
-
-        pointsOfInterest.forEach(function(point) {
-            var marker = L.marker(point.latlng).addTo(map);
-            marker.bindTooltip(point.name).openTooltip();
-            marker.bindPopup(point.description);
-        });
+        // Appel de la fonction pour ajouter les points d'intérêt
+        addPointsOfInterestToMap(map, pointsOfInterest);
 
         // Afficher la carte
         map.fitBounds(imageBounds); // Ajuster la carte à la taille de l'image
