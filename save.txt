@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testing Carte H&D Alarian</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <style>
+        #map {
+            width: 95%;
+            height: 90vh;
+            margin: 0 auto;
+        }
+        #coordinates {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background-color: white;
+            padding: 5px;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 5px #888;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <div id="coordinates">Coordonnées de la souris : </div>
+
+    <script>
+        var imagePaths = {
+            talbethHav: './images/Entetes-TalbethHav.jpg',
+            qereanHav: './images/Entetes-QereanHav.jpg',
+            candelle: './images/Entetes-Candelle.jpg',
+            kelgen: './images/Entetes-Kelgen.jpg',
+            foretYfondh: './images/Entetes-ForetYfondh.jpg',
+            // Ajoutez d'autres chemins d'images ici...
+        };
+        var cityIcon = L.icon({
+            iconUrl: './images/IcoVille.png',
+            iconSize: [60, 40],
+            iconAnchor: [18, 40],
+            popupAnchor: [0, -45]
+        });
+
+        // Créer une icône pour les lieux-dits
+        var landmarkIcon = L.icon({
+            iconUrl: './images/IcoEye.png',
+            iconSize: [28, 16],
+            iconAnchor: [14, 8],
+            popupAnchor: [0, -16]
+        });
+        var cities = [
+            {
+                name: "Talbeth-Hav",
+                latlng: [1.864, -1.967],
+                description: '<img src="' + imagePaths.talbethHav + '"><br>Chef-lieu de l’Ystaad, Talbeth-Hav est aussi la capitale du royaume d’Alarian. Ses habitants sont appelés les Talbethiens et Talbethiennes.'
+             },
+            {
+                name: "Qerean-Hav",
+                latlng: [3.87, -2.712],
+                description: '<img src="' + imagePaths.qereanHav + '"> <br>Aventure : \"La Nef des Ombres\".'
+           
+            },
+            {
+                name: "Kelgen",
+                latlng: [2.922, -1.983],
+                description: '<img src="' + imagePaths.kelgen + '"> <br>Kelgen est une petite ville ou un grand village. Pittoresque, avec sa place du marché et ses quelques auberges réputées (dont celle du \"Faisant Doré\"), ces parcs et allentours verdurés/verdoyants...<br> c\'est tout naturellement que nos aventuriers y ont élu domicile <br><br> Aventure : \"Le Miroir Brisé\".'
+           
+            }
+            // Ajoutez d'autres villes ici...
+        ];
+
+        var landmarks = [
+            {
+                name: "Forêt d'Yfondh",
+                latlng: [3.505, -2.707],
+                description: '<img src="' + imagePaths.foretYfondh + '"><br>La forêt d\'Yfondh est une forêt assez dense réputée pour être la zone où les guildes de marrauds et de brigants se réfugient une fois leur méfaits accomplis.<br> Nos compagons ont dernièrement apperçu y pénétrer une armée composée de différents groupes armés provenant de multiples régions (dont la milice de Talbeth-Hav).'
+           
+            },
+            {
+                name: "La Candelle",
+                latlng: [3.867, -2.605],
+                description: '<img src="' + imagePaths.candelle + '"><br>Aventure : \"La Nef des Ombres\".<br>La candelle est un pic rocheux à flanc de falaise, son accès est difficile car dans l\'estuaire la mer est mauvaise, peu connaissent son existance.'
+          
+            }
+            // Ajoutez d'autres lieux-dits ici...
+        ];
+
+        var citiesGroup = L.layerGroup();
+        var landmarksGroup = L.layerGroup();
+
+        var map = L.map('map', {
+            zoomSnap: 0.25,
+            zoomDelta: 0.51,
+            wheelPxPerZoomLevel: 600,
+            layers: [citiesGroup, landmarksGroup]
+        });
+
+        var imageUrl = './images/alarian.jpg';
+        var imageBounds = [[-8.7, -6], [8.7, 6]];
+
+        var image = L.imageOverlay(imageUrl, imageBounds).addTo(map);
+
+        L.control.scale({ imperial: false }).addTo(map);
+
+        var coordinatesDiv = document.getElementById('coordinates');
+        map.on('mousemove', function(event) {
+            var lat = event.latlng.lat.toFixed(6);
+            var lng = event.latlng.lng.toFixed(6);
+            coordinatesDiv.innerHTML = 'Coordonnées de la souris : ' + lat + ', ' + lng;
+        });
+
+        function addPointsOfInterestToGroup(points, group, icon) {
+            points.forEach(function(point) {
+                var marker = L.marker(point.latlng, { icon: icon });
+                marker.bindTooltip(point.name).openTooltip();
+                marker.bindPopup(point.description, { minWidth: 376, maxWidth: 376 });
+                marker.addTo(group);
+            });
+        }
+
+        addPointsOfInterestToGroup(cities, citiesGroup,cityIcon);
+        addPointsOfInterestToGroup(landmarks, landmarksGroup,landmarkIcon);
+
+        map.fitBounds(imageBounds);
+        image.addTo(map);
+        map.setZoom(7.25);
+        
+        L.control.layers({}, {
+            "Villes": citiesGroup,
+            "Lieux-Dits": landmarksGroup
+        }).addTo(map);
+    </script>
+</body>
+</html>
