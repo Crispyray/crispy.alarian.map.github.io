@@ -1,4 +1,4 @@
-import '../scss/leaflet-measure.scss';
+import './leaflet-measure.scss';
 
 import template from 'lodash/template';
 
