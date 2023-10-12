@@ -4,13 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carte Interactive</title>
+
     <!-- Inclure Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
 
-    
-    <!-- Inclure le fichier JavaScript principal -->
-    <script type="module" src="main.js"></script>
-    
+    <style>
+        #map {
+            width: 80%;
+            height: 80vh;
+            margin: 0 auto;
+        }
+        #coordinates {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background-color: white;
+            padding: 5px;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 5px #888;
+        }
+    </style>
 </head>
 <body>
     <!-- Div pour afficher les coordonnées de la souris -->
@@ -19,5 +32,65 @@
     <!-- Div pour afficher la carte -->
     <div id="map"></div>
 
+    <!-- Inclure Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    
+    <script type="module">
+        // Fonction pour initialiser la carte
+        function initializeMap() {
+            var map = L.map('map', {
+                zoomSnap: 0.25,
+                zoomDelta: 0.51,
+                wheelPxPerZoomLevel: 600
+            });
+            return map;
+        }
+        
+        // Fonction pour ajouter une image à la carte
+        function addImageToMap(map) {
+            var imageUrl = 'https://raw.githubusercontent.com/Crispyray/crispyray.github.io/main/images/alarian.jpg';
+            var imageBounds = [[-8.7, -6], [8.7, 6]];
+            var image = L.imageOverlay(imageUrl, imageBounds).addTo(map);
+        }
+        
+        // Fonction pour ajouter des points d'intérêt
+        function addPointsOfInterest(map) {
+            var pointsOfInterest = [
+                {
+                    name: "Point 1",
+                    latlng: [0.5, 2.0],
+                    description: "Informations sur le point 1."
+                }
+                // Ajoutez d'autres points d'intérêt ici...
+            ];
+        
+            pointsOfInterest.forEach(function(point) {
+                var marker = L.marker(point.latlng).addTo(map);
+                marker.bindTooltip(point.name).openTooltip();
+                marker.bindPopup(point.description);
+            });
+        }
+        
+        // Fonction pour afficher la carte
+        function displayMap() {
+            var map = initializeMap();
+            addImageToMap(map);
+            addPointsOfInterest(map);
+        
+            var coordinatesDiv = document.getElementById('coordinates');
+            map.on('mousemove', function(event) {
+                var lat = event.latlng.lat.toFixed(6);
+                var lng = event.latlng.lng.toFixed(6);
+                coordinatesDiv.innerHTML = 'Coordonnées de la souris : ' + lat + ', ' + lng;
+            });
+        
+            map.fitBounds(image.getBounds());
+            image.addTo(map);
+            map.setZoom(6.25);
+        }
+        
+        // Appel de la fonction pour afficher la carte
+        displayMap();
+    </script>
 </body>
 </html>
