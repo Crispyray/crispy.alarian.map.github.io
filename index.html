@@ -154,7 +154,7 @@
             map.on('mousemove', function(event) {
             var lat = event.latlng.lat.toFixed(6);
             var lng = event.latlng.lng.toFixed(6);
-            coordinatesDiv.innerHTML = 'Coordonnées de la souris : ' + lat + ', ' + lng;
+            coordinatesDiv.innerHTML = 'Coordonnées : ' + lat + ', ' + lng;
         });
 
         function addPointsOfInterestToGroup(points, group, icon) {
@@ -258,7 +258,7 @@ map.on('draw:created', function (e) {
 
         // Affichez la longueur calculée dans la div que vous avez créée
         var lengthDisplay = document.getElementById('length-display');
-        lengthDisplay.textContent = 'Longueur de la ligne : ' + length.toFixed(2) + ' mètres';
+        lengthDisplay.textContent = 'Distance : ' + length.toFixed(2) + ' mètres';
     }
 
     drawnItems.addLayer(layer);
@@ -276,7 +276,7 @@ map.on('draw:edited', function (e) {
             }
 
             // Mettez à jour la distance dans l'élément HTML où vous affichez la distance
-            document.getElementById('distanceDisplay').innerHTML = 'Longueur de la ligne : ' + length + ' mètres';
+            document.getElementById('distanceDisplay').innerHTML = 'Distance : ' + length + ' mètres';
         }
     });
 });
