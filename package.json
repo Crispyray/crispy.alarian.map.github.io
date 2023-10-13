@@ -1,1 +1,17 @@
+{
+  "name": "carte Alarian",
+  "version": "1.0.0",
+  "description": "Projet de carte Leaflet avec Leaflet Measure",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "leaflet": "^1.9.4",
+    "leaflet-measure": "^2.1.2" // Remarquez la version du plugin Leaflet Measure
+    "lodash": "^4.17.21"
+  },
+  "author": "Votre nom",
+  "license": "MIT"
+}
 
