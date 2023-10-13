@@ -34,6 +34,7 @@
     <div id="coordinates">Coordonnées de la souris : </div>
 
     <script>
+        var youAreHere = [3.851,-2.7015];
         var imagePaths = {
             talbethHav: './images/Entetes-TalbethHav.jpg',
             qereanHav: './images/Entetes-QereanHav.jpg',
@@ -92,26 +93,38 @@
             }
             // Ajoutez d'autres lieux-dits ici...
         ];
+        var posHeros = [
+            {
+                name: "Vous êtes ici!",
+                latlng: youAreHere,
+                description: '<img src="' + imagePaths.foretYfondh + '"><br>Vous êtes Ici.'
+           
+            }
+            // Ajoutez d'autres lieux-dits ici...
+        ];
 
         var citiesGroup = L.layerGroup();
         var landmarksGroup = L.layerGroup();
+        var youAreHereGroup = L.layergroup();
+
+
+        var imageUrl = './images/alarian.jpg';
+        var imageBounds = [[-8.7, -6], [8.7, 6]];
+        var image = L.imageOverlay(imageUrl, imageBounds).addTo(map);
 
         var map = L.map('map', {
             zoomSnap: 0.25,
             zoomDelta: 0.51,
             wheelPxPerZoomLevel: 600,
-            layers: [citiesGroup, landmarksGroup]
+            center: youAreHere,
+            layers: [citiesGroup, landmarksGroup],
+            measureControl: true
         });
-
-        var imageUrl = './images/alarian.jpg';
-        var imageBounds = [[-8.7, -6], [8.7, 6]];
-
-        var image = L.imageOverlay(imageUrl, imageBounds).addTo(map);
-
+        
         L.control.scale({ imperial: false }).addTo(map);
 
         var coordinatesDiv = document.getElementById('coordinates');
-        map.on('mousemove', function(event) {
+            map.on('mousemove', function(event) {
             var lat = event.latlng.lat.toFixed(6);
             var lng = event.latlng.lng.toFixed(6);
             coordinatesDiv.innerHTML = 'Coordonnées de la souris : ' + lat + ', ' + lng;
@@ -128,6 +141,7 @@
 
         addPointsOfInterestToGroup(cities, citiesGroup,cityIcon);
         addPointsOfInterestToGroup(landmarks, landmarksGroup,landmarkIcon);
+        addPointsOfInterestToGroup(posHeros, youAreHereGroup);
 
         map.fitBounds(imageBounds);
         image.addTo(map);
@@ -135,7 +149,8 @@
         
         L.control.layers({}, {
             "Villes": citiesGroup,
-            "Lieux-Dits": landmarksGroup
+            "Lieux-Dits": landmarksGroup,
+            "Vous êtes ici": youAreHereGroup
         }).addTo(map);
 
                 // Ajouter l'outil de mesure
