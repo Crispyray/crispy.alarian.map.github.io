@@ -158,6 +158,12 @@
             "Lieux-Dits": landmarksGroup,
             "Vous êtes ici": youAreHereGroup
         }).addTo(map);
+        
+        
+            youAreHereGroup.addTo(map);
+
+            // Pour la désactiver
+            landmarksGroup.removeFrom(map);
 
                 // Ajouter l'outil de mesure
    /*    L.control.measure({
