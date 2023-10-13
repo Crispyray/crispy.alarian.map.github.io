@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Testing Carte H&D Alarian</title>
     <link rel="icon" href="./favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-  
- <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     
- <script type="module" src="./leafletMeasure/leaflet-measure.js"></script>
- <link rel="stylesheet" href="./leafletMeasure/leaflet-measure.css" /> 
-
+    <!-- Inclure les styles -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.css" />
+    <!-- Inclure Leaflet et Leaflet Draw -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.js"></script>
 
     <style>
         #map {
@@ -126,7 +126,7 @@
             wheelPxPerZoomLevel: 600,
             center: youAreHere,
             layers: [citiesGroup, landmarksGroup],
-            measureControl: true
+            //measureControl: true
         });
         var image = L.imageOverlay(imageUrl, imageBounds).addTo(map);
         L.control.scale({ imperial: false }).addTo(map);
@@ -157,7 +157,7 @@
         
         L.control.layers({}, {
             "Villes": citiesGroup,
-            "Lieux-Dits": landmarksGroup,
+            "Point d'Intétêts": landmarksGroup,
             "Vous êtes ici": youAreHereGroup
         }).addTo(map);
         
@@ -166,14 +166,40 @@
 
             // Pour la désactiver
             landmarksGroup.removeFrom(map);
+                var map = L.map('map').setView([51.505, -0.09], 13);
 
-                // Ajouter l'outil de mesure
-   /*    L.control.measure({
-            primaryLengthUnit: 'meters', // Unité de mesure par défaut
-            secondaryLengthUnit: 'kilometers', // Unité de mesure secondaire
-            primaryAreaUnit: 'sqmeters', // Unité de mesure de surface par défaut
-            secondaryAreaUnit: 'hectares' // Unité de mesure de surface secondaire
-        }).addTo(map);*/
+////////// le nouveau ////////////
+        var drawnItems = new L.FeatureGroup();
+        map.addLayer(drawnItems);
+
+        var drawControl = new L.Control.Draw({
+            edit: {
+                featureGroup: drawnItems,
+            },
+            draw: {
+                polygon: false,
+                polyline: false,
+                circle: false,
+                marker: true,
+                rectangle: true,
+            },
+        });
+
+        map.addControl(drawControl);
+
+        map.on('draw:created', function (e) {
+            var type = e.layerType;
+            var layer = e.layer;
+
+            if (type === 'marker' || type === 'rectangle') {
+                // Ajoutez votre logique de mesure ici pour les marqueurs ou les rectangles
+            }
+
+            drawnItems.addLayer(layer);
+
+//////////////////////////////////////////////
+        });
+
     </script>
 </body>
 </html>
