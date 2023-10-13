@@ -110,7 +110,7 @@
 
         var imageUrl = './images/alarian.jpg';
         var imageBounds = [[-8.7, -6], [8.7, 6]];
-        var image = L.imageOverlay(imageUrl, imageBounds).addTo(map);
+      
 
         var map = L.map('map', {
             zoomSnap: 0.25,
@@ -120,7 +120,7 @@
             layers: [citiesGroup, landmarksGroup],
             measureControl: true
         });
-        
+        var image = L.imageOverlay(imageUrl, imageBounds).addTo(map);
         L.control.scale({ imperial: false }).addTo(map);
 
         var coordinatesDiv = document.getElementById('coordinates');
