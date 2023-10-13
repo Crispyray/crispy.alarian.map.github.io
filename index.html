@@ -206,7 +206,35 @@
                 rectangle: true,
             },
         });
-
+var drawControl = new L.Control.Draw({
+    edit: {
+        featureGroup: drawnItems,
+    },
+    draw: {
+        polygon: false,
+        polyline: {
+            shapeOptions: {
+                color: 'blue', // Couleur de la ligne (par exemple, bleue)
+                weight: 3,     // Épaisseur de la ligne (par exemple, 3 pixels)
+                lineCap: 'round'
+            },
+            allowIntersection: false,
+            drawError: {
+                color: 'orange',
+                timeout: 1000,
+            },
+            showLength: true,
+        },
+        circle: false,
+        marker: true,
+        rectangle: {
+            shapeOptions: {
+                color: 'green', // Couleur du rectangle (par exemple, verte)
+                weight: 2,      // Épaisseur du rectangle (par exemple, 2 pixels)
+            },
+        },
+    },
+});
         map.addControl(drawControl);
 
         map.on('draw:created', function (e) {
