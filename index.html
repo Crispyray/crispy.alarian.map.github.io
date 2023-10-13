@@ -28,6 +28,21 @@
             border: 1px solid #ccc;
             box-shadow: 0 0 5px #888;
         }
+        #length-display {
+            position: absolute;
+            top: 10px; /* Ajustez la position verticale selon vos besoins */
+            right: 10px; /* Ajustez la position horizontale selon vos besoins */
+            background-color: white;
+            padding: 5px;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 5px #888;
+            z-index: 1000; /* Assurez-vous que l'élément est au-dessus de la carte */
+        }
+        .leaflet-draw-draw-polyline path {
+            stroke: red;
+            stroke-width: 4px;
+            stroke-linejoin: round;
+        }
     </style>
 </head>
 <body>
