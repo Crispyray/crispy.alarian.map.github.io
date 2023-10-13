@@ -27,10 +27,11 @@
             padding: 5px;
             border: 1px solid #ccc;
             box-shadow: 0 0 5px #888;
+            z-index: 1000
         }
         #length-display {
             position: absolute;
-            top: 10px; /* Ajustez la position verticale selon vos besoins */
+            bottom: 10px; /* Ajustez la position verticale selon vos besoins */
             right: 10px; /* Ajustez la position horizontale selon vos besoins */
             background-color: white;
             padding: 5px;
@@ -46,11 +47,12 @@
     </style>
 </head>
 <body>
-    <div id="length-display">Longueur de la ligne : </div>
+    <div id="length-display">Distance : </div>
+    <div id="coordinates">Coordonnées : </div>
     <div id="map-container">
         <div id="map"></div>
     </div>
-    <div id="coordinates">Coordonnées de la souris : </div>
+    <div id="coordinates">Coordonnées : </div>
   
 
 
@@ -235,6 +237,23 @@ map.on('draw:created', function (e) {
     }
 
     drawnItems.addLayer(layer);
+});
+map.on('draw:edited', function (e) {
+    var editedLayers = e.layers;
+
+    editedLayers.eachLayer(function (layer) {
+        if (layer instanceof L.Polyline) {
+            var latlngs = layer.getLatLngs();
+            var length = 0;
+
+            for (var i = 1; i < latlngs.length; i++) {
+                length += latlngs[i - 1].distanceTo(latlngs[i]);
+            }
+
+            // Mettez à jour la distance dans l'élément HTML où vous affichez la distance
+            document.getElementById('distanceDisplay').innerHTML = 'Longueur de la ligne : ' + length + ' mètres';
+        }
+    });
 });
 
 
