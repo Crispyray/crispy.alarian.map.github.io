@@ -31,8 +31,13 @@
     </style>
 </head>
 <body>
-    <div id="map"></div>
+    <div id="length-display">Longueur de la ligne : </div>
+    <div id="map-container">
+        <div id="map"></div>
+    </div>
     <div id="coordinates">Coordonnées de la souris : </div>
+  
+
 
     <script>
         var youAreHere = [3.851,-2.7015];
@@ -178,7 +183,7 @@
             },
             draw: {
                 polygon: false,
-                polyline: false,
+                polyline: true,
                 circle: false,
                 marker: true,
                 rectangle: true,
@@ -196,6 +201,27 @@
             }
 
             drawnItems.addLayer(layer);
+            
+map.on('draw:created', function (e) {
+    var type = e.layerType;
+    var layer = e.layer;
+
+    if (type === 'polyline') {
+        var latlngs = layer.getLatLngs();
+        var length = 0;
+
+        for (var i = 1; i < latlngs.length; i++) {
+            length += latlngs[i - 1].distanceTo(latlngs[i]);
+        }
+
+        // Affichez la longueur calculée dans la div que vous avez créée
+        var lengthDisplay = document.getElementById('length-display');
+        lengthDisplay.textContent = 'Longueur de la ligne : ' + length.toFixed(2) + ' mètres';
+    }
+
+    drawnItems.addLayer(layer);
+});
+
 
 //////////////////////////////////////////////
         });
