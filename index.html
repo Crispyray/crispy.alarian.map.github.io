@@ -200,7 +200,7 @@
                 polyline: true,
                 circle: false,
                 marker: true,
-                rectangle: true,
+                rectangle: false,
             },
         });
 var drawControl = new L.Control.Draw({
@@ -211,11 +211,11 @@ var drawControl = new L.Control.Draw({
         polygon: false,
         polyline: {
             shapeOptions: {
-                color: 'blue', // Couleur de la ligne (par exemple, bleue)
-                weight: 3,     // Épaisseur de la ligne (par exemple, 3 pixels)
+                color: 'red', // Couleur de la ligne (par exemple, bleue)
+                weight: 4,     // Épaisseur de la ligne (par exemple, 3 pixels)
                 lineCap: 'round'
             },
-            allowIntersection: false,
+            allowIntersection: true,
             drawError: {
                 color: 'orange',
                 timeout: 1000,
