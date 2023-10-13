@@ -57,6 +57,12 @@
             iconAnchor: [14, 8],
             popupAnchor: [0, -16]
         });
+        var hdIcon = L.icon({
+            iconUrl: './images/IcoHetD.png',
+            iconSize: [32, 32],
+            iconAnchor: [0, 32],
+            popupAnchor: [0, 0]
+        });
         var cities = [
             {
                 name: "Talbeth-Hav",
@@ -141,7 +147,7 @@
 
         addPointsOfInterestToGroup(cities, citiesGroup,cityIcon);
         addPointsOfInterestToGroup(landmarks, landmarksGroup,landmarkIcon);
-        addPointsOfInterestToGroup(posHeros, youAreHereGroup);
+        addPointsOfInterestToGroup(posHeros, youAreHereGroup,hdIcon);
 
         map.fitBounds(imageBounds);
         image.addTo(map);
