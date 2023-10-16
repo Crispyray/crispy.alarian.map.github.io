@@ -253,52 +253,52 @@
         });
         map.addControl(drawControl);
 
-        map.on('draw:created', function (e) {
+       /* map.on('draw:created', function (e) {
             var type = e.layerType;
             var layer = e.layer;
 
             if (type === 'marker' || type === 'rectangle') {
                 // Ajoutez votre logique de mesure ici pour les marqueurs ou les rectangles
-            }
+            }*/
 
             drawnItems.addLayer(layer);
             
-map.on('draw:created', function (e) {
-    var type = e.layerType;
-    var layer = e.layer;
+        map.on('draw:created', function (e) {
+            var type = e.layerType;
+            var layer = e.layer;
 
-    if (type === 'polyline') {
-        var latlngs = layer.getLatLngs();
-        var length = 0;
+            if (type === 'polyline') {
+                var latlngs = layer.getLatLngs();
+                var length = 0;
 
-        for (var i = 1; i < latlngs.length; i++) {
-            length += latlngs[i - 1].distanceTo(latlngs[i]);
-        }
+                for (var i = 1; i < latlngs.length; i++) {
+                    length += latlngs[i - 1].distanceTo(latlngs[i]);
+                }
 
-        // Affichez la longueur calculée dans la div que vous avez créée
-        var lengthDisplay = document.getElementById('length-display');
-        lengthDisplay.textContent = 'Distance : ' + length.toFixed(2) + ' mètres';
-    }
-
-    drawnItems.addLayer(layer);
-});
-map.on('draw:edited', function (e) {
-    var editedLayers = e.layers;
-
-    editedLayers.eachLayer(function (layer) {
-        if (layer instanceof L.Polyline) {
-            var latlngs = layer.getLatLngs();
-            var length = 0;
-
-            for (var i = 1; i < latlngs.length; i++) {
-                length += latlngs[i - 1].distanceTo(latlngs[i]);
+                // Affichez la longueur calculée dans la div que vous avez créée
+                var lengthDisplay = document.getElementById('length-display');
+                lengthDisplay.textContent = 'Distance : ' + length.toFixed(2) + ' mètres';
             }
 
+            drawnItems.addLayer(layer);
+        });
+        map.on('draw:edited', function (e) {
+            var editedLayers = e.layers;
+
+            editedLayers.eachLayer(function (layer) {
+                if (layer instanceof L.Polyline) {
+                    var latlngs = layer.getLatLngs();
+                    var length = 0;
+
+                    for (var i = 1; i < latlngs.length; i++) {
+                length += latlngs[i - 1].distanceTo(latlngs[i]);
+                    }
+
             // Mettez à jour la distance dans l'élément HTML où vous affichez la distance
-            document.getElementById('distanceDisplay').innerHTML = 'Distance : ' + length + ' mètres';
-        }
-    });
-});
+                    document.getElementById('distanceDisplay').innerHTML = 'Distance : ' + length + ' mètres';
+                }
+            });
+        });
 
 
 //////////////////////////////////////////////
