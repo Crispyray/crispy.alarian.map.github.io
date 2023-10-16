@@ -137,8 +137,8 @@
             }
             // Ajoutez d'autres lieux-dits ici...
         ];
-        var provinces = [
-           /* {
+       /* var provinces = [
+            {
                 svgData: '...', // Remplacez par le code SVG de la première province
                 bounds: [[lat1, lon1], [lat2, lon2]], // Remplacez par les limites de la première province
             },
@@ -146,8 +146,8 @@
                 svgData: '...', // Remplacez par le code SVG de la deuxième province
                 bounds: [[lat1, lon1], [lat2, lon2]], // Remplacez par les limites de la deuxième province
             },
-            // Ajoutez d'autres provinces ici...*/
-        ];
+            // Ajoutez d'autres provinces ici...
+        ];*/
 
 
         var citiesGroup = L.layerGroup();
@@ -213,7 +213,7 @@
         var drawnItems = new L.FeatureGroup();
         map.addLayer(drawnItems);
 
-       /* var drawControl = new L.Control.Draw({
+       var drawControl = new L.Control.Draw({
             edit: {
                 featureGroup: drawnItems,
             },
@@ -224,7 +224,7 @@
                 marker: true,
                 rectangle: false,
             },
-        });*/
+        });
         var drawControl = new L.Control.Draw({
             edit: {
                 featureGroup: drawnItems,
@@ -249,18 +249,18 @@
                 rectangle: false,      
                     },
                 }),
-         /*   },
-        });*/
+            },
+        });
         
         map.addControl(drawControl);
 
-       /* map.on('draw:created', function (e) {
+       map.on('draw:created', function (e) {
             var type = e.layerType;
             var layer = e.layer;
 
             if (type === 'marker' || type === 'rectangle') {
                 // Ajoutez votre logique de mesure ici pour les marqueurs ou les rectangles
-            }*/
+            
 
             drawnItems.addLayer(layer);
             
