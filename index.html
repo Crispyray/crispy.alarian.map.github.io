@@ -156,7 +156,15 @@ L.geoJSON(provinceData, {
         weight: 2,        // Épaisseur de la ligne
         fill: 'none'      // Remplit ou non la forme (dans ce cas, non remplie)
     }
-}).addTo(provincesLayer);
+}).bindPopup('Informations sur la province ici').addTo(provincesLayer);
+
+        // Ajoutez un événement de clic pour afficher les informations lorsque vous cliquez sur une province
+provincesLayer.eachLayer(function (layer) {
+    layer.on('click', function (e) {
+        var popup = e.target.getPopup();
+        popup.openOn(map);
+    });
+});
 
 // Ajoutez d'autres provinces ici en utilisant la même structure GeoJSON
 
