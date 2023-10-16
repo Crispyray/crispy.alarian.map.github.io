@@ -128,44 +128,56 @@
 
         /////////////////////////////////////////////////
 // Créez un tableau d'objets avec les données de vos provinces (cet exemple utilise des données factices)
-fetch('./geojsonData/Ystaad.geojson')
-    .then(function (response) {
-        return response.json();
-    })
-         .then(function (provinceData) {
-        // Créez un groupe de couches pour les provinces
-        var provincesLayer = L.layerGroup();
+// Liste des noms de fichiers GeoJSON pour chaque province
+var provinceFiles = [
+    'Ystaad.geojson',  // Province A
+    // Province B
+    // Ajoutez les noms des fichiers pour les autres provinces ici
+];
 
-        // Ajoutez la province à la carte
-        L.geoJSON(provinceData, {
-            style: {
-                color: 'green',
-                weight: 2,
-                fill: 'none'
-            }
+// Créez un groupe de couches pour les provinces
+//var provincesLayer = L.layerGroup();
+
+// Utilisez une boucle pour charger et ajouter chaque province à la carte
+for (var i = 0; i < provinceFiles.length; i++) {
+    var filename = './geojsonData/' + provinceFiles[i];
+    
+    fetch(filename)
+        .then(function (response) {
+            return response.json();
         })
-        .bindPopup(function () {
-            // Personnalisez le contenu de la popup en fonction des propriétés de la province
-            var properties = provinceData.properties;
-            return `
-                <strong>${properties.name}</strong><br>
-                Population: ${properties.population}<br>
-                Superficie: ${properties.area} km²
-            `;
-        })
-        .addTo(provincesLayer);
-
-        // Ajoutez le groupe de couches de la province à la carte
-        provincesLayer.addTo(map);
-
-        // Gérez l'événement de clic pour la province
-        provincesLayer.eachLayer(function (layer) {
-            layer.on('click', function (e) {
-                var popup = e.target.getPopup();
-                popup.openOn(map);
-            });
+        .then(function (provinceData) {
+            // Ajoutez chaque province à la carte
+            L.geoJSON(provinceData, {
+                style: {
+                    color: 'blue',  // Couleur de la bordure de la province
+                    weight: 2,       // Épaisseur de la bordure
+                    fill: 'none'     // Remplissage désactivé
+                }
+            })
+            .bindPopup(function () {
+                // Personnalisez le contenu de la popup en fonction des propriétés de la province
+                var properties = provinceData.properties;
+                return `
+                    <strong>${properties.name}</strong><br>
+                    Population: ${properties.population}<br>
+                    Superficie: ${properties.area} km²
+                `;
+            })
+            .addTo(provincesLayer);
         });
+}
+
+// Ajoutez le groupe de couches des provinces à la carte
+provincesLayer.addTo(map);
+
+// Gérez l'événement de clic pour chaque province
+provincesLayer.eachLayer(function (layer) {
+    layer.on('click', function (e) {
+        var popup = e.target.getPopup();
+        popup.openOn(map);
     });
+});
 
 
     ///////////////////////////////////    
