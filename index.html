@@ -6,20 +6,12 @@
     <title>Testing Carte H&D Alarian</title>
     <link rel="icon" href="./favicon.ico" type="image/x-icon">
 
-    <!-- Inclure les fichier SVG depuis le dossier "svg"
-    <object data="./svg/alarian-Ystaad.svg" type="image/svg+xml" id="zoneSVG"></object> -->
-
-    
     <!-- Inclure les styles -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.css" />
     <!-- Inclure Leaflet et Leaflet Draw -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script src="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.js"></script>
-    <!-- Inclure Leaflet-SVG 
-    <script src="https://unpkg.com/leaflet-svg@0.2.1/dist/leaflet-svg.js"></script>
-    <script src="https://unpkg.com/leaflet-svg-overlay"></script>-->
-
 
     <style>
         #map {
@@ -35,17 +27,17 @@
             padding: 5px;
             border: 1px solid #ccc;
             box-shadow: 0 0 5px #888;
-            z-index: 1000
+            z-index: 1000;
         }
         #length-display {
             position: absolute;
-            bottom: 10px; /* Ajustez la position verticale selon vos besoins */
-            right: 40px; /* Ajustez la position horizontale selon vos besoins */
+            bottom: 10px;
+            right: 40px;
             background-color: white;
             padding: 5px;
             border: 1px solid #ccc;
             box-shadow: 0 0 5px #888;
-            z-index: 1000; /* Assurez-vous que l'élément est au-dessus de la carte */
+            z-index: 1000;
         }
         .leaflet-draw-draw-polyline path {
             stroke: red;
@@ -62,7 +54,7 @@
     </div>
 
     <script>
-        var youAreHere = [3.851,-2.7015];
+        var youAreHere = [3.851, -2.7015];
         var imagePaths = {
             talbethHav: './images/Entetes-TalbethHav.jpg',
             qereanHav: './images/Entetes-QereanHav.jpg',
@@ -70,7 +62,6 @@
             kelgen: './images/Entetes-Kelgen.jpg',
             foretYfondh: './images/Entetes-ForetYfondh.jpg',
             youAreHerePath: './images/Entetes-VousEtesIci.jpg',
-            // Ajoutez d'autres chemins d'images ici...
         };
         var cityIcon = L.icon({
             iconUrl: './images/IcoVille.png',
@@ -97,68 +88,46 @@
                 name: "Talbeth-Hav",
                 latlng: [1.864, -1.967],
                 description: '<img src="' + imagePaths.talbethHav + '"><br>Chef-lieu de l’Ystaad, Talbeth-Hav est aussi la capitale du royaume d’Alarian. Ses habitants sont appelés les Talbethiens et Talbethiennes.'
-             },
+            },
             {
                 name: "Qerean-Hav",
                 latlng: [3.87, -2.712],
-                description: '<img src="' + imagePaths.qereanHav + '"> <br>Aventure : \"La Nef des Ombres\".'
-           
+                description: '<img src="' + imagePaths.qereanHav + '"> <br>Aventure : "La Nef des Ombres".'
             },
             {
                 name: "Kelgen",
                 latlng: [2.922, -1.983],
-                description: '<img src="' + imagePaths.kelgen + '"> <br>Kelgen est une petite ville ou un grand village. Pittoresque, avec sa place du marché et ses quelques auberges réputées (dont celle du \"Faisant Doré\"), ces parcs et allentours verdurés/verdoyants...<br> c\'est tout naturellement que nos aventuriers y ont élu domicile <br><br> Aventure : \"Le Miroir Brisé\".'
-           
+                description: '<img src="' + imagePaths.kelgen + '"> <br>Kelgen est une petite ville ou un grand village. Pittoresque, avec sa place du marché et ses quelques auberges réputées (dont celle du "Faisant Doré"), ces parcs et allentours verdurés/verdoyants...<br> c\'est tout naturellement que nos aventuriers y ont élu domicile <br><br> Aventure : "Le Miroir Brisé".'
             }
-            // Ajoutez d'autres villes ici...
         ];
 
         var landmarks = [
             {
                 name: "Forêt d'Yfondh",
                 latlng: [3.505, -2.707],
-                description: '<img src="' + imagePaths.foretYfondh + '"><br>La forêt d\'Yfondh est une forêt assez dense réputée pour être la zone où les guildes de marrauds et de brigants se réfugient une fois leurs méfaits accomplis.<br> Nos compagons ont dernièrement apperçu y pénétrer une armée composée de différents groupes armés provenant de multiples régions (dont la milice de Talbeth-Hav).'
-           
+                description: '<img src="' + imagePaths.foretYfondh + '"><br>La forêt d\'Yfondh est une forêt assez dense réputée pour être la zone où les guildes de maraudes et de brigands se réfugient une fois leurs méfaits accomplis.<br> Nos compagnons ont dernièrement aperçu y pénétrer une armée composée de différents groupes armés provenant de multiples régions (dont la milice de Talbeth-Hav).'
             },
             {
                 name: "La Candelle",
                 latlng: [3.867, -2.605],
-                description: '<img src="' + imagePaths.candelle + '"><br>Aventure : \"La Nef des Ombres\".<br>La candelle est un pic rocheux à flanc de falaise, son accès est difficile car dans l\'estuaire la mer est mauvaise, peu connaissent son existance.'
-          
+                description: '<img src="' + imagePaths.candelle + '"><br>Aventure : "La Nef des Ombres".<br>La Candelle est un pic rocheux à flanc de falaise, son accès est difficile car dans l\'estuaire la mer est mauvaise, peu connaissent son existence.'
             }
-            // Ajoutez d'autres lieux-dits ici...
         ];
         var posHeros = [
             {
                 name: "Vous êtes ici!",
                 latlng: youAreHere,
                 description: '<img src="' + imagePaths.youAreHerePath + '">'
-           
             }
-            // Ajoutez d'autres lieux-dits ici...
         ];
-       /* var provinces = [
-            {
-                svgData: '...', // Remplacez par le code SVG de la première province
-                bounds: [[lat1, lon1], [lat2, lon2]], // Remplacez par les limites de la première province
-            },
-            {
-                svgData: '...', // Remplacez par le code SVG de la deuxième province
-                bounds: [[lat1, lon1], [lat2, lon2]], // Remplacez par les limites de la deuxième province
-            },
-            // Ajoutez d'autres provinces ici...
-        ];*/
-
 
         var citiesGroup = L.layerGroup();
         var landmarksGroup = L.layerGroup();
         var youAreHereGroup = L.layerGroup();
         var provincesLayer = L.layerGroup();
 
-
         var imageUrl = './images/alarian.jpg';
         var imageBounds = [[-8.7, -6], [8.7, 6]];
-      
 
         var map = L.map('map', {
             zoomSnap: 0.25,
@@ -167,12 +136,12 @@
             center: youAreHere,
             layers: [citiesGroup, landmarksGroup, youAreHereGroup],
         });
-        
+
         var image = L.imageOverlay(imageUrl, imageBounds).addTo(map);
         L.control.scale({ imperial: false }).addTo(map);
 
         var coordinatesDiv = document.getElementById('coordinates');
-            map.on('mousemove', function(event) {
+        map.on('mousemove', function(event) {
             var lat = event.latlng.lat.toFixed(6);
             var lng = event.latlng.lng.toFixed(6);
             coordinatesDiv.innerHTML = 'Coordonnées : ' + lat + ', ' + lng;
@@ -187,42 +156,29 @@
             });
         }
 
-        addPointsOfInterestToGroup(cities, citiesGroup,cityIcon);
-        addPointsOfInterestToGroup(landmarks, landmarksGroup,landmarkIcon);
-        addPointsOfInterestToGroup(posHeros, youAreHereGroup,hdIcon);
-       
+        addPointsOfInterestToGroup(cities, citiesGroup, cityIcon);
+        addPointsOfInterestToGroup(landmarks, landmarksGroup, landmarkIcon);
+        addPointsOfInterestToGroup(posHeros, youAreHereGroup, hdIcon);
+
         map.fitBounds(imageBounds);
         image.addTo(map);
         map.setZoom(7.25);
-        
+
         L.control.layers({}, {
             "Villes": citiesGroup,
-            "Point d'Intétêts": landmarksGroup,
+            "Point d'Intérêt": landmarksGroup,
             "Vous êtes ici": youAreHereGroup,
-            "Provinces" : provincesLayer
+            "Provinces": provincesLayer
         }).addTo(map);
-        
-        
-            youAreHereGroup.addTo(map);
 
-            // Pour la désactiver
-            landmarksGroup.removeFrom(map);
-                
+        youAreHereGroup.addTo(map);
+
+        // Pour la désactiver
+        landmarksGroup.removeFrom(map);
+
         var drawnItems = new L.FeatureGroup();
         map.addLayer(drawnItems);
 
-       var drawControl = new L.Control.Draw({
-            edit: {
-                featureGroup: drawnItems,
-            },
-            draw: {
-                polygon: false,
-                polyline: true,
-                circle: false,
-                marker: true,
-                rectangle: false,
-            },
-        });
         var drawControl = new L.Control.Draw({
             edit: {
                 featureGroup: drawnItems,
@@ -231,9 +187,9 @@
                 polygon: false,
                 polyline: {
                     shapeOptions: {
-                        color: 'red', // Couleur de la ligne (par exemple, bleue)
-                        weight: 4,     // Épaisseur de la ligne (par exemple, 3 pixels)
-                        lineCap: 'round'
+                        color: 'red',
+                        weight: 4,
+                        lineCap: 'round',
                     },
                     allowIntersection: true,
                     drawError: {
@@ -244,25 +200,24 @@
                 },
                 circle: false,
                 marker: true,
-                rectangle: false,      
-                    },
-                }),
+                rectangle: false,
             },
         });
-        
+
         map.addControl(drawControl);
 
-       map.on('draw:created', function (e) {
+        map.on('draw:created', function(e) {
             var type = e.layerType;
             var layer = e.layer;
 
             if (type === 'marker' || type === 'rectangle') {
                 // Ajoutez votre logique de mesure ici pour les marqueurs ou les rectangles
-            
+            }
 
             drawnItems.addLayer(layer);
-            
-        map.on('draw:created', function (e) {
+        });
+
+        map.on('draw:created', function(e) {
             var type = e.layerType;
             var layer = e.layer;
 
@@ -281,10 +236,11 @@
 
             drawnItems.addLayer(layer);
         });
-        map.on('draw:edited', function (e) {
+
+        map.on('draw:edited', function(e) {
             var editedLayers = e.layers;
 
-            editedLayers.eachLayer(function (layer) {
+            editedLayers.eachLayer(function(layer) {
                 if (layer instanceof L.Polyline) {
                     var latlngs = layer.getLatLngs();
                     var length = 0;
@@ -293,13 +249,11 @@
                         length += latlngs[i - 1].distanceTo(latlngs[i]);
                     }
 
-            // Mettez à jour la distance dans l'élément HTML où vous affichez la distance
-                    document.getElementById('distanceDisplay').innerHTML = 'Distance : ' + length + ' mètres';
+                    // Mettez à jour la distance dans l'élément HTML où vous affichez la distance
+                    document.getElementById('length-display').innerHTML = 'Distance : ' + length + ' mètres';
                 }
             });
         });
-        });
-
     </script>
 </body>
 </html>
