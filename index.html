@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Testing Carte H&D Alarian</title>
     <link rel="icon" href="./favicon.ico" type="image/x-icon">
+
+    <!-- Inclure les fichier SVG depuis le dossier "svg" -->
+    <object data="./svg/alarian-Ystaad.svg" type="image/svg+xml" id="zoneSVG"></object>
+
     
     <!-- Inclure les styles -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
@@ -12,6 +16,8 @@
     <!-- Inclure Leaflet et Leaflet Draw -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script src="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.js"></script>
+    <!-- Inclure Leaflet-SVG -->
+    <script src="https://unpkg.com/leaflet-svg@0.2.1/dist/leaflet-svg.js"></script>
 
     <style>
         #map {
@@ -133,6 +139,7 @@
         var citiesGroup = L.layerGroup();
         var landmarksGroup = L.layerGroup();
         var youAreHereGroup = L.layerGroup();
+        var provincesLayer = L.provincesLayer();
 
 
         var imageUrl = './images/alarian.jpg';
@@ -170,6 +177,16 @@
         addPointsOfInterestToGroup(landmarks, landmarksGroup,landmarkIcon);
         addPointsOfInterestToGroup(posHeros, youAreHereGroup,hdIcon);
 
+        // Ajoutez une couche SVG
+
+        var provincesObject = L.objectSvg("./svg/alarian-Ystaad.svg", {
+            width: 100, // Largeur de la couche SVG
+            height: 100, // Hauteur de la couche SVG
+        });
+
+        provincesLayer.addLayer(provincesObject);
+        map.addLayer(provincesLayer);
+
         map.fitBounds(imageBounds);
         image.addTo(map);
         map.setZoom(7.25);
@@ -177,7 +194,8 @@
         L.control.layers({}, {
             "Villes": citiesGroup,
             "Point d'Intétêts": landmarksGroup,
-            "Vous êtes ici": youAreHereGroup
+            "Vous êtes ici": youAreHereGroup,
+            "Provinces" : provincesLayer
         }).addTo(map);
         
         
