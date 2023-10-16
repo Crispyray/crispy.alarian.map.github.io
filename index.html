@@ -166,8 +166,8 @@
             wheelPxPerZoomLevel: 600,
             center: youAreHere,
             layers: [citiesGroup, landmarksGroup, youAreHereGroup],
-            //measureControl: true
         });
+        
         var image = L.imageOverlay(imageUrl, imageBounds).addTo(map);
         L.control.scale({ imperial: false }).addTo(map);
 
@@ -213,7 +213,7 @@
         var drawnItems = new L.FeatureGroup();
         map.addLayer(drawnItems);
 
-        var drawControl = new L.Control.Draw({
+       /* var drawControl = new L.Control.Draw({
             edit: {
                 featureGroup: drawnItems,
             },
@@ -224,7 +224,7 @@
                 marker: true,
                 rectangle: false,
             },
-        });
+        });*/
         var drawControl = new L.Control.Draw({
             edit: {
                 featureGroup: drawnItems,
@@ -246,10 +246,7 @@
                 },
                 circle: false,
                 marker: true,
-                rectangle: {
-                    shapeOptions: {
-                color: 'green', // Couleur du rectangle (par exemple, verte)
-                weight: 2,      // Épaisseur du rectangle (par exemple, 2 pixels)
+                rectangle: false,      
                     },
                 },
             },
