@@ -127,17 +127,19 @@
         var provincesLayer = L.layerGroup();
 
         /////////////////////////////////////////////////
-
-// Ajoutez ici le code GeoJSON pour chaque province que vous souhaitez afficher
-var provinceData = {
-    "type": "Feature",
-    "properties": {
-        "name": "Ma Province"
-    },
-    "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-            [
+// Créez un tableau d'objets avec les données de vos provinces (cet exemple utilise des données factices)
+var provinceData = [
+    {
+        type: "Feature",
+        properties: {
+            name: "Province 1",
+            population: 1000000,
+            area: 15000,
+            // Ajoutez d'autres propriétés spécifiques ici
+        },
+        geometry: {
+            type: "Polygon",
+            coordinates: [
                 [-2, 3],
                 [-1, 4],
                 [0, 3],
@@ -146,19 +148,52 @@ var provinceData = {
                 [-1, 2],
                 [-2, 3]
             ]
-        ]
-    }
-};
+        }
+    },
+    {
+        type: "Feature",
+        properties: {
+            name: "Province 2",
+            population: 800000,
+            area: 12000,
+            // Ajoutez d'autres propriétés spécifiques ici
+        },
+        geometry: {
+            type: "Polygon",
+            coordinates: [
+                // Coordonnées géoJSON pour la frontière de la province 2
+            ]
+        }
+    },
+    // Ajoutez d'autres provinces ici...
+];
 
-L.geoJSON(provinceData, {
-    style: {
-        color: 'green',  // Couleur de la frontière
-        weight: 2,        // Épaisseur de la ligne
-        fill: 'none'      // Remplit ou non la forme (dans ce cas, non remplie)
-    }
-}).bindPopup('Informations sur la province ici').addTo(provincesLayer);
+// Ajoutez chaque province à la carte
+provinceData.forEach(function (province) {
+    L.geoJSON(province, {
+        style: {
+            color: 'green',
+            weight: 2,
+            fill: 'none'
+        }
+    })
+    .bindPopup(function () {
+        // Personnalisez le contenu de la popup en fonction des propriétés de la province
+        var properties = province.properties;
+        return `
+            <strong>${properties.name}</strong><br>
+            Population: ${properties.population}<br>
+            Superficie: ${properties.area} km²
+            <!-- Ajoutez d'autres propriétés ici -->
+        `;
+    })
+    .addTo(provincesLayer);
+});
 
-        // Ajoutez un événement de clic pour afficher les informations lorsque vous cliquez sur une province
+// Ajoutez le groupe de couches des provinces à la carte
+provincesLayer.addTo(map);
+
+// Gérez l'événement de clic pour chaque province
 provincesLayer.eachLayer(function (layer) {
     layer.on('click', function (e) {
         var popup = e.target.getPopup();
@@ -166,7 +201,7 @@ provincesLayer.eachLayer(function (layer) {
     });
 });
 
-// Ajoutez d'autres provinces ici en utilisant la même structure GeoJSON
+
 
     ///////////////////////////////////    
 
