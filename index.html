@@ -248,9 +248,10 @@
                 marker: true,
                 rectangle: false,      
                     },
-                },
-            },
-        });
+                }),
+         /*   },
+        });*/
+        
         map.addControl(drawControl);
 
        /* map.on('draw:created', function (e) {
@@ -291,7 +292,7 @@
                     var length = 0;
 
                     for (var i = 1; i < latlngs.length; i++) {
-                length += latlngs[i - 1].distanceTo(latlngs[i]);
+                        length += latlngs[i - 1].distanceTo(latlngs[i]);
                     }
 
             // Mettez à jour la distance dans l'élément HTML où vous affichez la distance
