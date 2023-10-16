@@ -126,6 +126,42 @@
         var youAreHereGroup = L.layerGroup();
         var provincesLayer = L.layerGroup();
 
+        /////////////////////////////////////////////////
+
+// Ajoutez ici le code GeoJSON pour chaque province que vous souhaitez afficher
+var provinceData = {
+    "type": "Feature",
+    "properties": {
+        "name": "Ma Province"
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [-2, 3],
+                [-1, 4],
+                [0, 3],
+                [1, 2],
+                [0, 1],
+                [-1, 2],
+                [-2, 3]
+            ]
+        ]
+    }
+};
+
+L.geoJSON(provinceData, {
+    style: {
+        color: 'green',  // Couleur de la frontière
+        weight: 2,        // Épaisseur de la ligne
+        fill: 'none'      // Remplit ou non la forme (dans ce cas, non remplie)
+    }
+}).addTo(provincesLayer);
+
+// Ajoutez d'autres provinces ici en utilisant la même structure GeoJSON
+
+    ///////////////////////////////////    
+
         var imageUrl = './images/alarian.jpg';
         var imageBounds = [[-8.7, -6], [8.7, 6]];
 
