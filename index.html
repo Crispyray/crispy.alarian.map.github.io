@@ -132,47 +132,45 @@ var provinceData = [
     {
         type: "Feature",
         properties: {
-            name: "Province 1",
-            population: 1000000,
-            area: 15000,
-            // Ajoutez d'autres propriétés spécifiques ici
+            name: "Province A",
+            population: 1500000,
+            area: 25000,
         },
         geometry: {
             type: "Polygon",
             coordinates: [
-                [-2, 3],
-                [-1, 4],
-                [0, 3],
-                [1, 2],
-                [0, 1],
-                [-1, 2],
-                [-2, 3]
+                [
+                    [0, 0],
+                    [0, 5],
+                    [5, 5],
+                    [5, 0],
+                    [0, 0]
+                ]
             ]
         }
     },
     {
         type: "Feature",
         properties: {
-            name: "Province 2",
+            name: "Province B",
             population: 800000,
             area: 12000,
-            // Ajoutez d'autres propriétés spécifiques ici
         },
         geometry: {
             type: "Polygon",
-            coordinates: [  [-10, -7],
-                [-11, -6],
-                [-8, -5],
-                [-9, -6],
-                [-8, -7],
-                [-7, -6],
-                [-10, -7],
-                // Coordonnées géoJSON pour la frontière de la province 2
+            coordinates: [
+                [
+                    [6, 0],
+                    [6, 4],
+                    [10, 4],
+                    [10, 0],
+                    [6, 0]
+                ]
             ]
         }
-    },
-    // Ajoutez d'autres provinces ici...
+    }
 ];
+
 
 // Ajoutez chaque province à la carte
 provinceData.forEach(function (province) {
@@ -190,7 +188,6 @@ provinceData.forEach(function (province) {
             <strong>${properties.name}</strong><br>
             Population: ${properties.population}<br>
             Superficie: ${properties.area} km²
-            <!-- Ajoutez d'autres propriétés ici -->
         `;
     })
     .addTo(provincesLayer);
@@ -206,7 +203,6 @@ provincesLayer.eachLayer(function (layer) {
         popup.openOn(map);
     });
 });
-
 
 
     ///////////////////////////////////    
