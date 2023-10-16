@@ -178,17 +178,7 @@
         addPointsOfInterestToGroup(cities, citiesGroup,cityIcon);
         addPointsOfInterestToGroup(landmarks, landmarksGroup,landmarkIcon);
         addPointsOfInterestToGroup(posHeros, youAreHereGroup,hdIcon);
-
-        // Ajoutez une couche SVG
-
-       /* var provincesObject = L.objectSvg("./svg/alarian-Ystaad.svg", {
-            width: 100, // Largeur de la couche SVG
-            height: 100, // Hauteur de la couche SVG
-        });*/
-
        
-        map.addLayer(provincesLayer);
-
         map.fitBounds(imageBounds);
         image.addTo(map);
         map.setZoom(7.25);
