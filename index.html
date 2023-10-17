@@ -162,25 +162,29 @@ provincesConfig.forEach(function (config) {
         .then(function (response) {
             return response.json();
         })
-        .then(function (geoJSON) {
-            // Créez une couche GeoJSON en utilisant le GeoJSON chargé
-            var provinceLayer = L.geoJSON(geoJSON, {
-                style: {
-                    color: 'green',
-                    weight: 2,
-                    fill: 'none'
-                }
-            });
-
+      .then(function (geoJSON) {
+    var provinceLayer = L.geoJSON(geoJSON, {
+        style: {
+            color: 'green',
+            weight: 2,
+            fill: 'none'
+        },
+        onEachFeature: function (feature, layer) {
             // Appliquez l'offset et l'échelle personnalisés
-            provinceLayer.setLatLngs(provinceLayer.getLatLngs().map(function (latlng) {
-                return L.latLng(latlng.lat + config.offset[0], latlng.lng + config.offset[1]);
-            }));
+            layer.getLatLngs = function () {
+                return feature.geometry.coordinates.map(function (latlng) {
+                    return L.latLng(latlng[1] + config.offset[0], latlng[0] + config.offset[1]);
+                });
+            };
+        }
+    });
 
-            provinceLayer.setStyle({
-                transform: 'scale(' + config.scale + ')',
-                transformOrigin: 'top left'
-            });
+    // Appliquez l'offset et l'échelle personnalisés
+    provinceLayer.setStyle({
+        transform: 'scale(' + config.scale + ')',
+        transformOrigin: 'top left'
+    });
+
 
             // Ajoutez la province au groupe de couches des provinces
             provinceLayer.addTo(provincesLayer);
