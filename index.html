@@ -139,6 +139,25 @@ var geoJSONFiles = [
     "Ystaad.geojson"    
 ];
 
+// Boucle pour charger et ajouter chaque fichier GeoJSON
+for (var i = 0; i < geoJSONFiles.length; i++) {
+    var fileName = geoJSONFiles[i];
+    loadGeoJSON(fileName);
+}
+
+function loadGeoJSON(fileName) {
+    L.geoJSON.ajax('./geojsonData/' + fileName, {
+        onEachFeature: function (feature, layer) {
+            // Définir une action lors du clic sur une province
+            layer.on('click', function (e) {
+                // Vous pouvez afficher ici les informations propres à la province (feature.properties)
+                console.log(feature.properties);
+            });
+        }
+    }).addTo(provinceGroup);
+}
+        
+        
         
 // Gérez l'événement de clic pour chaque province
 provincesLayer.eachLayer(function (layer) {
