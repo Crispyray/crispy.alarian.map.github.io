@@ -172,7 +172,7 @@ provincesGroup.eachLayer(function (layer) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         var imageUrl = './images/alarian.jpg';
         var imageBounds = [[-8.7, -6], [8.7, 6]];
-
+        
         var map = L.map('map', {
             zoomSnap: 0.25,
             zoomDelta: 0.51,
@@ -181,9 +181,15 @@ provincesGroup.eachLayer(function (layer) {
             layers: [citiesGroup, landmarksGroup, youAreHereGroup],
         });
 
+
         var image = L.imageOverlay(imageUrl, imageBounds).addTo(map);
         L.control.scale({ imperial: false }).addTo(map);
 
+        map.fitBounds(imageBounds);
+        image.addTo(map);
+        map.setZoom(7.25);
+        map.panTo(youAreHere);
+        
         var coordinatesDiv = document.getElementById('coordinates');
         map.on('mousemove', function(event) {
             var lat = event.latlng.lat.toFixed(6);
@@ -204,9 +210,8 @@ provincesGroup.eachLayer(function (layer) {
         addPointsOfInterestToGroup(landmarks, landmarksGroup, landmarkIcon);
         addPointsOfInterestToGroup(posHeros, youAreHereGroup, hdIcon);
 
-        map.fitBounds(imageBounds);
-        image.addTo(map);
-       //map.setZoom(7.25);
+
+   
 
         L.control.layers({}, {
             "Villes": citiesGroup,
