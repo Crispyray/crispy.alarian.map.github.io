@@ -127,77 +127,60 @@
         var provincesLayer = L.layerGroup();
 
         /////////////////////////////////////////////////
+const fs = require('fs');
+const path = require('path');
 
-        
-  fetch('./geojsonData/Ystaad.json') // Assurez-vous que le fichier est correctement nommé (polygon.json)
-            .then(response => response.json())
-            .then(data => {
-                var coordinates = data.coordinates[0].map(coord => [coord[1], coord[0]]); // Inversez les coordonnées pour correspondre à Leaflet
+// Répertoire contenant les fichiers SVG
+const directoryPath = './svg/';
 
-                // Créez un polygone à partir des coordonnées et ajoutez-le à la carte
-                var polygon = L.polygon(coordinates).addTo(map);
-
-                // Ajuster la vue de la carte pour afficher le polygone
-                map.fitBounds(polygon.getBounds());
-            });
-
-        
-var provincesConfig = [
-    {
-        name: "Ystaad",
-        geoJSONFile: "./geojsonData/Ystaad.geojson",
-        offset: [100, -100], // Ajustez les offsets selon vos besoins
-        scale: 0.01 // Ajustez l'échelle selon vos besoins (1.0 signifie aucune échelle)
+// Lire les fichiers SVG du répertoire
+fs.readdir(directoryPath, (err, files) => {
+    if (err) {
+        console.error('Erreur de lecture du répertoire : ', err);
+        return;
     }
-    /*{
-        name: "Talban",
-        geoJSONFile: "./geojsonData/Talban.geojson",
-        offset: [100, 100], // Ajustez les offsets selon vos besoins
-        scale: 0.8 // Ajustez l'échelle selon vos besoins (0.8 signifie 80% de la taille d'origine)
-    },*/
-    // Ajoutez d'autres provinces avec leurs fichiers GeoJSON, offsets et échelles ici...
-];
 
-// Créez un groupe de couches pour les provinces
-//var provincesLayer = L.layerGroup();
+    // Parcourir chaque fichier SVG
+    files.forEach((file) => {
+        if (path.extname(file) === '.txt') {
+            const filePath = path.join(directoryPath, file);
 
-// Parcourez le tableau des configurations et ajoutez chaque province à la carte
-provincesConfig.forEach(function (config) {
-    // Chargez le fichier GeoJSON de la province
-    fetch(config.geoJSONFile)
-        .then(function (response) {
-            return response.json();
-        })
-      .then(function (geoJSON) {
-    var provinceLayer = L.geoJSON(geoJSON, {
-        style: {
-            color: 'green',
-            weight: 2,
-            fill: 'none'
-        },
-        onEachFeature: function (feature, layer) {
-            // Appliquez l'offset et l'échelle personnalisés
-            layer.getLatLngs = function () {
-                return feature.geometry.coordinates.map(function (latlng) {
-                    return L.latLng(latlng[1] + config.offset[0], latlng[0] + config.offset[1]);
+            // Lire le contenu du fichier SVG
+            fs.readFile(filePath, 'utf8', (err, data) => {
+                if (err) {
+                    console.error('Erreur de lecture du fichier : ', err);
+                    return;
+                }
+
+                // Divisez les coordonnées en paires
+                const svgCoordinates = data.trim();
+                const pairs = svgCoordinates.split(" ").map((pair) => {
+                    const coords = pair.split(",");
+                    return [parseFloat(coords[0]), parseFloat(coords[1])];
                 });
-            };
+
+                // Créez une structure GeoJSON pour un polygone
+                const geojson = {
+                    type: "Feature",
+                    geometry: {
+                        type: "Polygon",
+                        coordinates: [pairs],
+                    },
+                };
+
+                // Faites quelque chose avec l'objet GeoJSON, par exemple, sauvegardez-le dans un fichier
+                const outputFileName = path.basename(file, '.txt') + '.json';
+                const outputPath = path.join(directoryPath, outputFileName);
+                fs.writeFile(outputPath, JSON.stringify(geojson, null, 4), (err) => {
+                    if (err) {
+                        console.error('Erreur lors de l\'écriture du fichier GeoJSON : ', err);
+                    } else {
+                        console.log('Fichier GeoJSON sauvegardé : ', outputPath);
+                    }
+                });
+            });
         }
     });
-
-    // Appliquez l'offset et l'échelle personnalisés
-    provinceLayer.setStyle({
-        transform: 'scale(' + config.scale + ')',
-        transformOrigin: 'top left'
-    });
-
-
-            // Ajoutez la province au groupe de couches des provinces
-            provinceLayer.addTo(provincesLayer);
-
-            // Associez une popup à la province avec son nom
-            provinceLayer.bindPopup(config.name);
-        });
 });
 
 // Ajoutez le groupe de couches des provinces à la carte
