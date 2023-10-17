@@ -135,67 +135,63 @@
 //var provincesLayer = L.layerGroup();
 
 // Utilisez une boucle pour charger et ajouter chaque province à la carte
-var provinces = [
+// Créez un tableau d'objets qui contient les configurations pour chaque province
+var provincesConfig = [
     {
-        name: 'Province A (Ystaad)',
-        geojsonPath: './geojsonData/Ystaad.geojson',
-        scale: 0.1,
-        translation: [-80, 95],
-        style: {
-            weight: 2,
-            color: 'blue'
-        }
-    },
+        name: "Ystaad",
+        geoJSONFile: "./geojsonData/Ystaad.geojson",
+        offset: [0, 0], // Ajustez les offsets selon vos besoins
+        scale: 1.0 // Ajustez l'échelle selon vos besoins (1.0 signifie aucune échelle)
+    }
     /*{
-        name: 'Province B (Talban)',
-        geojsonPath: './geojsonData/Talban.geojson',
-        scale: 3,
-        translation: [-1, -1],
-        style: {
-            weight: 2,
-            color: 'green'
-        }
-    }*/
-    // Ajoutez d'autres provinces ici avec leurs propriétés
+        name: "Talban",
+        geoJSONFile: "./geojsonData/Talban.geojson",
+        offset: [100, 100], // Ajustez les offsets selon vos besoins
+        scale: 0.8 // Ajustez l'échelle selon vos besoins (0.8 signifie 80% de la taille d'origine)
+    },*/
+    // Ajoutez d'autres provinces avec leurs fichiers GeoJSON, offsets et échelles ici...
 ];
 
-// Parcourez le tableau des provinces et ajoutez-les à la carte
-provinces.forEach(function (province) {
-    fetch(province.geojsonPath)
+// Créez un groupe de couches pour les provinces
+//var provincesLayer = L.layerGroup();
+
+// Parcourez le tableau des configurations et ajoutez chaque province à la carte
+provincesConfig.forEach(function (config) {
+    // Chargez le fichier GeoJSON de la province
+    fetch(config.geoJSONFile)
         .then(function (response) {
             return response.json();
         })
-        .then(function (provinceData) {
-            function onEachFeature(feature, layer) {
-                var scale = province.scale;
-                var translation = province.translation;
+        .then(function (geoJSON) {
+            // Créez une couche GeoJSON en utilisant le GeoJSON chargé
+            var provinceLayer = L.geoJSON(geoJSON, {
+                style: {
+                    color: 'green',
+                    weight: 2,
+                    fill: 'none'
+                }
+            });
 
-                // Appliquez le facteur d'échelle et le déplacement
-                var transformedGeometry = feature.geometry.coordinates.map(function (ring) {
-                    return ring.map(function (coord) {
-                        var x = coord[0] * scale + translation[0];
-                        var y = coord[1] * scale + translation[1];
-                        return [x, y];
-                    });
-                });
+            // Appliquez l'offset et l'échelle personnalisés
+            provinceLayer.setLatLngs(provinceLayer.getLatLngs().map(function (latlng) {
+                return L.latLng(latlng.lat + config.offset[0], latlng.lng + config.offset[1]);
+            }));
 
-                feature.geometry.coordinates = transformedGeometry;
+            provinceLayer.setStyle({
+                transform: 'scale(' + config.scale + ')',
+                transformOrigin: 'top left'
+            });
 
-                layer.setStyle(province.style);
+            // Ajoutez la province au groupe de couches des provinces
+            provinceLayer.addTo(provincesLayer);
 
-                var properties = feature.properties;
-                layer.bindPopup(`
-                    <strong>${properties.name}</strong><br>
-                    Population: ${properties.population}<br>
-                    Superficie: ${properties.area} km²
-                `);
-            }
-
-            L.geoJSON(provinceData, {
-                onEachFeature: onEachFeature
-            }).addTo(map);
+            // Associez une popup à la province avec son nom
+            provinceLayer.bindPopup(config.name);
         });
 });
+
+// Ajoutez le groupe de couches des provinces à la carte
+provincesLayer.addTo(map);
 
 // Ajoutez le groupe de couches des provinces à la carte
 //provincesLayer.addTo(map);
