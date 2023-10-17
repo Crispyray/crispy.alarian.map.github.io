@@ -9,7 +9,7 @@
 			"properties": {
 				"name": "Le Talban",
 				"image": "./images/Entetes-Ystaad.jpg",
-        			"description":"Description du Talban"
+        			"description":"Description du Talban",
 				"tessellate": true,
 				"altitudeMode": "absolute"
 			}
