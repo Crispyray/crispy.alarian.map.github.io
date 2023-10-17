@@ -150,8 +150,21 @@ function loadGeoJSON(fileName) {
                 onEachFeature: function (feature, layer) {
                     // Définir une action lors du clic sur une province
                     layer.on('click', function (e) {
-                        // Vous pouvez afficher ici les informations propres à la province (feature.properties)
-                        console.log(feature.properties);
+                        // Extraire les propriétés personnalisées
+                        var properties = feature.properties;
+                        var name = properties.name;
+                        var image = properties.image;
+                        var description = properties.description;
+
+                        // Créer le contenu HTML du popup
+                        var popupContent = `
+                            <img src="${image}" alt="${name}">
+                            <h3>${name}</h3>
+                            <p>${description}</p>
+                        `;
+
+                        // Créez le popup et l'attachez à la couche
+                        layer.bindPopup(popupContent);
                     });
                 }
             }).addTo(provincesGroup);
