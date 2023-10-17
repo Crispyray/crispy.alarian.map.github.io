@@ -164,7 +164,7 @@ function loadGeoJSON(fileName) {
                         `;
 
                         // Créez le popup et l'attachez à la couche
-                        layer.bindPopup(popupContent);
+                        layer.bindPopup(popupContent,{ minWidth: 376, maxWidth: 376 });
                     });
                 }
             }).addTo(provincesGroup);
