@@ -9,7 +9,7 @@
 			"properties": {
 				"name": "Le Norven",
 				"image": "./images/Entetes-Ystaad.jpg",
-        			"description": "Description du Norven"
+        			"description": "Description du Norven",
 				"tessellate": true,
 				"altitudeMode": "absolute"
 			}
