@@ -12,6 +12,11 @@
     <!-- Inclure Leaflet et Leaflet Draw -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script src="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.js"></script>
+    <!-- Inclure la bibliothèque KML de leaflet -->
+    <script src="https://cdn.rawgit.com/calvinmetcalf/leaflet.KML/gh-pages/leaflet.kml.js"></script>
+    <!-- Inclure la bibliothèque omnivore de leaflet -->
+    <script src="https://unpkg.com/leaflet-omnivore@0.3.4/leaflet-omnivore.min.js"></script>
+
 
     <style>
         #map {
@@ -133,31 +138,11 @@ var filesToRead = [
 ];
 
 // Fonction pour lire un fichier texte et ajouter le polygone à la carte
-function readAndAddPolygonFromFile(filePath) {
-    fetch(filePath)
-        .then(response => response.text())
-        .then(svgCoordinates => {
-            var pairs = svgCoordinates.split(" ").map(function(pair) {
-                var coords = pair.split(",");
-                return [parseFloat(coords[0]), parseFloat(coords[1])];
-            });
-
-            var geojson = {
-                type: "Feature",
-                geometry: {
-                    type: "Polygon",
-                    coordinates: [pairs]
-                }
-            };
-
-            L.geoJSON(geojson).addTo(map);
-        });
-}
-
-// Lire et ajouter tous les fichiers de la liste
-filesToRead.forEach(function(filePath) {
-    readAndAddPolygonFromFile(filePath);
-});
+var kmlLayer = omnivore.kml('./kml/Ystaad.kml')
+    .on('ready', function () {
+        map.fitBounds(kmlLayer.getBounds()); // Ajustez le zoom pour s'adapter au KML
+    })
+    .addTo(map);
 
 // Gérez l'événement de clic pour chaque province
 provincesLayer.eachLayer(function (layer) {
