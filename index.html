@@ -148,7 +148,7 @@ function loadGeoJSON(fileName) {
     fetch('./geojsonData/' + fileName)
         .then(response => response.json())
         .then(data => {
-            L.geoJSON(data, {
+            var geoJSONLayer = L.geoJSON(data, {
                 onEachFeature: function (feature, layer) {
                     // Définir une action lors du clic sur une province
                     layer.on('click', function (e) {
@@ -156,7 +156,17 @@ function loadGeoJSON(fileName) {
                         console.log(feature.properties);
                     });
                 }
-            }).addTo(provincesGroup);
+            });
+
+            // Déplacez le calque GeoJSON vers une nouvelle latitude et longitude
+            var newLatLng = L.latLng(0, -0.09); // Modifiez ces valeurs avec les coordonnées souhaitées
+            geoJSONLayer.setLatLng(newLatLng);
+
+            // Rafraîchissez la carte pour voir les modifications
+           // map.panTo(newLatLng);
+
+            // Ajoutez le calque GeoJSON repositionné au groupe
+            geoJSONLayer.addTo(provinceGroup);
         });
 }
         
@@ -206,9 +216,9 @@ provincesGroup.eachLayer(function (layer) {
         addPointsOfInterestToGroup(landmarks, landmarksGroup, landmarkIcon);
         addPointsOfInterestToGroup(posHeros, youAreHereGroup, hdIcon);
 
-        map.fitBounds(imageBounds);
+        //map.fitBounds(imageBounds);
         image.addTo(map);
-        map.setZoom(7.25);
+       //map.setZoom(7.25);
 
         L.control.layers({}, {
             "Villes": citiesGroup,
