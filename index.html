@@ -187,8 +187,8 @@ provincesGroup.eachLayer(function (layer) {
 
         map.fitBounds(imageBounds);
         image.addTo(map);
-        map.setZoom(7.25);
-        map.panTo(youAreHere);
+        //map.setZoom(7.25);
+        map.setView(youAreHere,7.25);
         
         var coordinatesDiv = document.getElementById('coordinates');
         map.on('mousemove', function(event) {
