@@ -148,7 +148,7 @@ function loadGeoJSON(fileName) {
     fetch('./geojsonData/' + fileName)
         .then(response => response.json())
         .then(data => {
-            var geoJSONLayer = L.geoJSON(data, {
+            L.geoJSON(data, {
                 onEachFeature: function (feature, layer) {
                     // Définir une action lors du clic sur une province
                     layer.on('click', function (e) {
@@ -156,17 +156,7 @@ function loadGeoJSON(fileName) {
                         console.log(feature.properties);
                     });
                 }
-            });
-
-            // Déplacez le calque GeoJSON vers une nouvelle latitude et longitude
-            var newLatLng = L.latLng(0, -0.09); // Modifiez ces valeurs avec les coordonnées souhaitées
-            geoJSONLayer.setLatLng(newLatLng);
-
-            // Rafraîchissez la carte pour voir les modifications
-           // map.panTo(newLatLng);
-
-            // Ajoutez le calque GeoJSON repositionné au groupe
-            geoJSONLayer.addTo(provinceGroup);
+            }).addTo(provinceGroup);
         });
 }
         
