@@ -127,64 +127,37 @@
         var provincesLayer = L.layerGroup();
 
         /////////////////////////////////////////////////
-const fs = require('fs');
-const path = require('path');
+var filesToRead = [
+    './svg/Ystaad.txt',
+      // Ajoutez autant de fichiers que nécessaire
+];
 
-// Répertoire contenant les fichiers SVG
-const directoryPath = './svg/';
-
-// Lire les fichiers SVG du répertoire
-fs.readdir(directoryPath, (err, files) => {
-    if (err) {
-        console.error('Erreur de lecture du répertoire : ', err);
-        return;
-    }
-
-    // Parcourir chaque fichier SVG
-    files.forEach((file) => {
-        if (path.extname(file) === '.txt') {
-            const filePath = path.join(directoryPath, file);
-
-            // Lire le contenu du fichier SVG
-            fs.readFile(filePath, 'utf8', (err, data) => {
-                if (err) {
-                    console.error('Erreur de lecture du fichier : ', err);
-                    return;
-                }
-
-                // Divisez les coordonnées en paires
-                const svgCoordinates = data.trim();
-                const pairs = svgCoordinates.split(" ").map((pair) => {
-                    const coords = pair.split(",");
-                    return [parseFloat(coords[0]), parseFloat(coords[1])];
-                });
-
-                // Créez une structure GeoJSON pour un polygone
-                const geojson = {
-                    type: "Feature",
-                    geometry: {
-                        type: "Polygon",
-                        coordinates: [pairs],
-                    },
-                };
-
-                // Faites quelque chose avec l'objet GeoJSON, par exemple, sauvegardez-le dans un fichier
-                const outputFileName = path.basename(file, '.txt') + '.json';
-                const outputPath = path.join(directoryPath, outputFileName);
-                fs.writeFile(outputPath, JSON.stringify(geojson, null, 4), (err) => {
-                    if (err) {
-                        console.error('Erreur lors de l\'écriture du fichier GeoJSON : ', err);
-                    } else {
-                        console.log('Fichier GeoJSON sauvegardé : ', outputPath);
-                    }
-                });
+// Fonction pour lire un fichier texte et ajouter le polygone à la carte
+function readAndAddPolygonFromFile(filePath) {
+    fetch(filePath)
+        .then(response => response.text())
+        .then(svgCoordinates => {
+            var pairs = svgCoordinates.split(" ").map(function(pair) {
+                var coords = pair.split(",");
+                return [parseFloat(coords[0]), parseFloat(coords[1])];
             });
-        }
-    });
-});
 
-// Ajoutez le groupe de couches des provinces à la carte
-//provincesLayer.addTo(map);
+            var geojson = {
+                type: "Feature",
+                geometry: {
+                    type: "Polygon",
+                    coordinates: [pairs]
+                }
+            };
+
+            L.geoJSON(geojson).addTo(map);
+        });
+}
+
+// Lire et ajouter tous les fichiers de la liste
+filesToRead.forEach(function(filePath) {
+    readAndAddPolygonFromFile(filePath);
+});
 
 // Gérez l'événement de clic pour chaque province
 provincesLayer.eachLayer(function (layer) {
