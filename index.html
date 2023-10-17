@@ -129,44 +129,73 @@
         /////////////////////////////////////////////////
 // Créez un tableau d'objets avec les données de vos provinces (cet exemple utilise des données factices)
 // Liste des noms de fichiers GeoJSON pour chaque province
-var provinceFiles = [
-    'Ystaad.geojson',  // Province A
-    // Province B
-    // Ajoutez les noms des fichiers pour les autres provinces ici
-];
+
 
 // Créez un groupe de couches pour les provinces
 //var provincesLayer = L.layerGroup();
 
 // Utilisez une boucle pour charger et ajouter chaque province à la carte
-for (var i = 0; i < provinceFiles.length; i++) {
-    var filename = './geojsonData/' + provinceFiles[i];
-    
-    fetch(filename)
+var provinces = [
+    {
+        name: 'Province A (Ystaad)',
+        geojsonPath: './geojsonData/Ystaad.geojson',
+        scale: 2,
+        translation: [5, 2],
+        style: {
+            weight: 2,
+            color: 'blue'
+        }
+    },
+    {
+        name: 'Province B (Talban)',
+        geojsonPath: './geojsonData/Talban.geojson',
+        scale: 3,
+        translation: [-1, -1],
+        style: {
+            weight: 2,
+            color: 'green'
+        }
+    }
+    // Ajoutez d'autres provinces ici avec leurs propriétés
+];
+
+// Parcourez le tableau des provinces et ajoutez-les à la carte
+provinces.forEach(function (province) {
+    fetch(province.geojsonPath)
         .then(function (response) {
             return response.json();
         })
         .then(function (provinceData) {
-            // Ajoutez chaque province à la carte
-            L.geoJSON(provinceData, {
-                style: {
-                    color: 'blue',  // Couleur de la bordure de la province
-                    weight: 2,       // Épaisseur de la bordure
-                    fill: 'none'     // Remplissage désactivé
-                }
-            })
-            .bindPopup(function () {
-                // Personnalisez le contenu de la popup en fonction des propriétés de la province
-                var properties = provinceData.properties;
-                return `
+            function onEachFeature(feature, layer) {
+                var scale = province.scale;
+                var translation = province.translation;
+
+                // Appliquez le facteur d'échelle et le déplacement
+                var transformedGeometry = feature.geometry.coordinates.map(function (ring) {
+                    return ring.map(function (coord) {
+                        var x = coord[0] * scale + translation[0];
+                        var y = coord[1] * scale + translation[1];
+                        return [x, y];
+                    });
+                });
+
+                feature.geometry.coordinates = transformedGeometry;
+
+                layer.setStyle(province.style);
+
+                var properties = feature.properties;
+                layer.bindPopup(`
                     <strong>${properties.name}</strong><br>
                     Population: ${properties.population}<br>
                     Superficie: ${properties.area} km²
-                `;
-            })
-            .addTo(provincesLayer);
+                `);
+            }
+
+            L.geoJSON(provinceData, {
+                onEachFeature: onEachFeature
+            }).addTo(map);
         });
-}
+});
 
 // Ajoutez le groupe de couches des provinces à la carte
 //provincesLayer.addTo(map);
