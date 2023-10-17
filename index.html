@@ -161,7 +161,7 @@ function loadGeoJSON(fileName) {
 }
         
 // Gérez l'événement de clic pour chaque province
-provincesLayer.eachLayer(function (layer) {
+provincesGroup.eachLayer(function (layer) {
     layer.on('click', function (e) {
         var popup = e.target.getPopup();
         popup.openOn(map);
@@ -218,7 +218,7 @@ var geoJSONFiles = ["province1.geojson", "province2.geojson", "province3.geojson
             "Villes": citiesGroup,
             "Point d'Intérêt": landmarksGroup,
             "Vous êtes ici": youAreHereGroup,
-            "Provinces": provincesLayer
+            "Provinces": provincesGroup
         }).addTo(map);
 
         youAreHereGroup.addTo(map);
