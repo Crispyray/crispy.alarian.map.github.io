@@ -12,8 +12,7 @@
     <!-- Inclure Leaflet et Leaflet Draw -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script src="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.js"></script>
-    <!-- Inclure Leaflet ajax -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-ajax/2.1.0/leaflet.ajax.min.js"></script>
+
 
 
 
@@ -146,18 +145,20 @@ for (var i = 0; i < geoJSONFiles.length; i++) {
 }
 
 function loadGeoJSON(fileName) {
-    L.geoJSON.ajax('./geojsonData/' + fileName, {
-        onEachFeature: function (feature, layer) {
-            // Définir une action lors du clic sur une province
-            layer.on('click', function (e) {
-                // Vous pouvez afficher ici les informations propres à la province (feature.properties)
-                console.log(feature.properties);
-            });
-        }
-    }).addTo(provinceGroup);
+    fetch('./geojsonData/' + fileName)
+        .then(response => response.json())
+        .then(data => {
+            L.geoJSON(data, {
+                onEachFeature: function (feature, layer) {
+                    // Définir une action lors du clic sur une province
+                    layer.on('click', function (e) {
+                        // Vous pouvez afficher ici les informations propres à la province (feature.properties)
+                        console.log(feature.properties);
+                    });
+                }
+            }).addTo(provinceGroup);
+        });
 }
-        
-        
         
 // Gérez l'événement de clic pour chaque province
 provincesLayer.eachLayer(function (layer) {
