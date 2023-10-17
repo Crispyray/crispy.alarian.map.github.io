@@ -10,7 +10,7 @@
 	"features": [{
 			"type": "Feature",
 			"properties": {
-				"Name": "Ystaad",
+				"name": "Ystaad",
        				"image": "url_de_l_image.jpg",
         			"description": "Description de la Province 1"
 			},
