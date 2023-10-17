@@ -127,15 +127,21 @@
         var provincesLayer = L.layerGroup();
 
         /////////////////////////////////////////////////
-// Créez un tableau d'objets avec les données de vos provinces (cet exemple utilise des données factices)
-// Liste des noms de fichiers GeoJSON pour chaque province
 
+        
+  fetch('./geojsonData/Ystaad.json') // Assurez-vous que le fichier est correctement nommé (polygon.json)
+            .then(response => response.json())
+            .then(data => {
+                var coordinates = data.coordinates[0].map(coord => [coord[1], coord[0]]); // Inversez les coordonnées pour correspondre à Leaflet
 
-// Créez un groupe de couches pour les provinces
-//var provincesLayer = L.layerGroup();
+                // Créez un polygone à partir des coordonnées et ajoutez-le à la carte
+                var polygon = L.polygon(coordinates).addTo(map);
 
-// Utilisez une boucle pour charger et ajouter chaque province à la carte
-// Créez un tableau d'objets qui contient les configurations pour chaque province
+                // Ajuster la vue de la carte pour afficher le polygone
+                map.fitBounds(polygon.getBounds());
+            });
+
+        
 var provincesConfig = [
     {
         name: "Ystaad",
