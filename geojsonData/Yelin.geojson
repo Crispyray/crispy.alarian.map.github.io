@@ -8,6 +8,8 @@
 			},
 			"properties": {
 				"name": "Yelin",
+				"image": "./images/Entetes-Inconnue.jpg",
+        			"description":"Description du Yelin",
 				"tessellate": true,
 				"altitudeMode": "relativeToGround"
 			}
