@@ -237,7 +237,7 @@ fetch('./geojsonData/Villes.geojson')
 
       // Créez un marqueur pour la ville
       const cityMarker = L.marker(latlng, { icon: cityIcon })
-        .bindPopup(`<b>${name}</b><br>${description}`)
+        .bindPopup(`<b>${name}</b><br>${description}`,{ minWidth: 376, maxWidth: 376 })
         .addTo(citiesGroup);
     });
   })
