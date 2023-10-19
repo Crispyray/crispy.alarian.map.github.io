@@ -19,7 +19,7 @@
 {"type":"Feature","geometry":{"type":"Point","coordinates":[1.041607474551887,-3.46033619443849,0]},"properties":{"name":"Saub","description": "<img src='./images/Entetes-Inconnue.jpg'>"}},
 {"type":"Feature","geometry":{"type":"Point","coordinates":[1.075838161797795,-4.049634779880553,0]},"properties":{"name":"Yatsim","description": "<img src='./images/Entetes-Inconnue.jpg'>"}},
 {"type":"Feature","geometry":{"type":"Point","coordinates":[3.906719573627293,-1.010875982620387,0]},"properties":{"name":"Brum","description": "<img src='./images/Entetes-Inconnue.jpg'>"}},
-{"type":"Feature","geometry":{"type":"Point","coordinates":[-2.920984317467219,3.605506430098762,0]},"properties":{"name":"Agtod-Hav,"description": "<img src='./images/Entetes-Inconnue.jpg'>"}},
+{"type":"Feature","geometry":{"type":"Point","coordinates":[-2.920984317467219,3.605506430098762,0]},"properties":{"name":"Agtod-Hav","description": "<img src='./images/Entetes-Inconnue.jpg'>"}},
 {"type":"Feature","geometry":{"type":"Point","coordinates":[-2.459975382628168,3.989892243031054,0]},"properties":{"name":"Jerndal","description": "<img src='./images/Entetes-Inconnue.jpg'>"}},
 {"type":"Feature","geometry":{"type":"Point","coordinates":[-2.258345016972416,4.147579298379774,0]},"properties":{"name":"Tzagid","description": "<img src='./images/Entetes-Inconnue.jpg'>"}},
 {"type":"Feature","geometry":{"type":"Point","coordinates":[-2.249966280576379,4.720842191479481,0]},"properties":{"name":"Ragkaod","description": "<img src='./images/Entetes-Inconnue.jpg'>"}},
