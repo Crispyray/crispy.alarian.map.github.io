@@ -1,7 +1,7 @@
 {"type":"FeatureCollection", "features":[
-{"type":"Feature","geometry":{"type":"Point","coordinates":[-2.230571038310318,3.144256479024678,0]},"properties":{"name":"Yfondh","description": '<img src="'imagePaths.villeInconue'">}},
-{"type":"Feature","geometry":{"type":"Point","coordinates":[-3.069674082985662,3.315976998753141,0]},"properties":{"name":"Azamp-Hav","description": '<img src="'imagePaths.villeInconue'">}},
-{"type":"Feature","geometry":{"type":"Point","coordinates":[-3.297185664196184,1.919736605509081,0]},"properties":{"name":"Ar-Hav","description": '<img src="'imagePaths.villeInconue'">}},
+{"type":"Feature","geometry":{"type":"Point","coordinates":[-2.230571038310318,3.144256479024678,0]},"properties":{"name":"Yfondh","description": '<img src="' + imagePaths.villeInconnue + '">'}},
+{"type":"Feature","geometry":{"type":"Point","coordinates":[-3.069674082985662,3.315976998753141,0]},"properties":{"name":"Azamp-Hav","description": '<img src="' + imagePaths.villeInconnue + '">'}},
+{"type":"Feature","geometry":{"type":"Point","coordinates":[-3.297185664196184,1.919736605509081,0]},"properties":{"name":"Ar-Hav","description": '<img src="' + imagePaths.villeInconnue + '">'},
 {"type":"Feature","geometry":{"type":"Point","coordinates":[-3.198130008551302,1.78831321774547,0]},"properties":{"name":"Arna"}},
 {"type":"Feature","geometry":{"type":"Point","coordinates":[-2.385071356463445,1.899781834095926,0]},"properties":{"name":"Misgen"}},
 {"type":"Feature","geometry":{"type":"Point","coordinates":[-1.939412394231227,2.095690292667708,0]},"properties":{"name":"Yniz"}},
