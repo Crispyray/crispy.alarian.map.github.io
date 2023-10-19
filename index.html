@@ -225,7 +225,22 @@ provincesGroup.eachLayer(function (layer) {
         addPointsOfInterestToGroup(landmarks, landmarksGroup, landmarkIcon);
         addPointsOfInterestToGroup(posHeros, youAreHereGroup, hdIcon);
 
+// Charger le fichier GeoJSON avec toutes les villes
+fetch('./geojsonData/Villes.geojson')
+  .then(response => response.json())
+  .then(data => {
+    data.features.forEach(feature => {
+      const name = feature.properties.name; // Remplacez 'name' par la propriété qui contient le nom de la ville
+      const latlng = [feature.geometry.coordinates[1], feature.geometry.coordinates[0]]; // Coordonnées GeoJSON
+      const description = feature.properties.description; // Remplacez 'description' par la propriété qui contient la description de la ville
 
+      // Créez un marqueur pour la ville
+      const cityMarker = L.marker(latlng, { icon: cityIcon })
+        .bindPopup(`<b>${name}</b><br>${description}`)
+        .addTo(citiesGroup);
+    });
+  })
+  .catch(error => console.error('Erreur lors du chargement du GeoJSON :', error));
    
 
         L.control.layers({}, {
