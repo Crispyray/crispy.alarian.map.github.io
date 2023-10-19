@@ -8,6 +8,8 @@
 			},
 			"properties": {
 				"name": "Gru",
+				"image": "./images/Entetes-Inconnue.jpg",
+        			"description":"Description du Gru",
 				"tessellate": true,
 				"altitudeMode": "absolute"
 			}
