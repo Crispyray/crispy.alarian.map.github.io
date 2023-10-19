@@ -8,6 +8,8 @@
 			},
 			"properties": {
 				"name": "Gramlin",
+				"image": "./images/Entetes-Inconnue.jpg",
+        			"description":"Description du Gru",
 				"tessellate": true,
 				"altitudeMode": "absolute"
 			}
