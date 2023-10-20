@@ -56,6 +56,10 @@
 
     <script>
         var youAreHere = [3.304, -2.577];
+
+//////////////////////////////////////////////////////
+////////////-------Path des entêtes--------///////////
+//////////////////////////////////////////////////////        
         var imagePaths = {
             villeInconue: './images/Entetes-Inconnue.jpg',
             talbethHav: './images/Entetes-TalbethHav.jpg',
@@ -65,14 +69,23 @@
             foretYfondh: './images/Entetes-ForetYfondh.jpg',
             youAreHerePath: './images/Entetes-VousEtesIci.jpg',
         };
+//////////////////////////////////////////////////////
+////////////------------icones-------------///////////
+//////////////////////////////////////////////////////     
+
+        
         var cityIcon = L.icon({
             iconUrl: './images/IcoVille.png',
             iconSize: [60, 40],
             iconAnchor: [18, 40],
             popupAnchor: [0, -45]
         });
-
-        // Créer une icône pour les lieux-dits
+        var smallCityIcon = L.icon({
+            iconUrl: './images/IcoVille.png',
+            iconSize: [60, 40],
+            iconAnchor: [18, 40],
+            popupAnchor: [0, -45]
+        });       
         var landmarkIcon = L.icon({
             iconUrl: './images/IcoEye.png',
             iconSize: [28, 16],
@@ -85,6 +98,10 @@
             iconAnchor: [0, 64],
             popupAnchor: [0, 0]
         });
+
+//////////////////////////////////////////////////////
+////////////----tableau des villes v1------///////////
+//////////////////////////////////////////////////////             
         var cities = [
             {
                 name: "Talbeth-Hav",
@@ -102,7 +119,6 @@
                 description: '<img src="' + imagePaths.kelgen + '"> <br>Kelgen est une petite ville ou un grand village. Pittoresque, avec sa place du marché et ses quelques auberges réputées (dont celle du "Faisant Doré"), ces parcs et allentours verdurés/verdoyants...<br> c\'est tout naturellement que nos aventuriers y ont élu domicile <br><br> Aventure : "Le Miroir Brisé".'
             }
         ];
-
         var landmarks = [
             {
                 name: "Forêt d'Yfondh",
@@ -114,25 +130,24 @@
                 latlng: [3.3456, -2.478],
                 description: '<img src="' + imagePaths.candelle + '"><br>Aventure : "La Nef des Ombres".<br>La Candelle est un pic rocheux à flanc de falaise, son accès est difficile car dans l\'estuaire la mer est mauvaise, peu connaissent son existence.'
             }
-        ];
+        ];   
         var posHeros = [
             {
                 name: "Vous êtes ici!",
                 latlng: youAreHere,
                 description: '<img src="' + imagePaths.youAreHerePath + '">'
             }
-        ];
-
+        ];        
+//////////////////////////////////////////////////////
+////////////---------Layers groups---------///////////
+//////////////////////////////////////////////////////     
         var citiesGroup = L.layerGroup();
         var landmarksGroup = L.layerGroup();
         var youAreHereGroup = L.layerGroup();
         var provincesGroup = L.layerGroup();
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// Liste des noms de fichiers GeoJSON (assurez-vous qu'ils sont dans le répertoire ./geojsonData)
+//////////////////////////////////////////////////////
+////////////--------GeoJson Provinces------///////////
+//////////////////////////////////////////////////////             
 var geoJSONFiles = [
     "Norven.geojson",
     "Talban.geojson",
@@ -141,13 +156,11 @@ var geoJSONFiles = [
     "Yelin.geojson",
     "Ystaad.geojson"
 ];
-
 // Boucle pour charger et ajouter chaque fichier GeoJSON
 for (var i = 0; i < geoJSONFiles.length; i++) {
     var fileName = geoJSONFiles[i];
     loadGeoJSON(fileName);
 }
-
 function loadGeoJSON(fileName) {
     fetch('./geojsonData/' + fileName)
         .then(response => response.json())
@@ -175,8 +188,7 @@ function loadGeoJSON(fileName) {
                 }
             }).addTo(provincesGroup);
         });
-}
-        
+}        
 // Gérez l'événement de clic pour chaque province
 provincesGroup.eachLayer(function (layer) {
     layer.on('click', function (e) {
@@ -184,11 +196,9 @@ provincesGroup.eachLayer(function (layer) {
         popup.openOn(map);
     });
 });
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////
+////////////----------intit Map------------///////////
+//////////////////////////////////////////////////////     
         var imageUrl = './images/alarian.png';
         var imageBounds = [[-7.48, -5.67], [7.48, 5.67]];
         
@@ -197,7 +207,7 @@ provincesGroup.eachLayer(function (layer) {
             zoomDelta: 0.51,
             wheelPxPerZoomLevel: 600,
             center: youAreHere,
-            layers: [citiesGroup, landmarksGroup, youAreHereGroup],
+            layers: [citiesGroup, landmarksGroup, youAreHereGroup, provincesGroup],
         });
 
 
@@ -208,7 +218,10 @@ provincesGroup.eachLayer(function (layer) {
         image.addTo(map);
         //map.setZoom(7.25);
         map.setView(youAreHere,7.75);
-        
+
+//////////////////////////////////////////////////////
+////////////------coordonnées Souris-------///////////
+//////////////////////////////////////////////////////             
         var coordinatesDiv = document.getElementById('coordinates');
         map.on('mousemove', function(event) {
             var lat = event.latlng.lat.toFixed(6);
