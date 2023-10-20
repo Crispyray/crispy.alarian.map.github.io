@@ -207,7 +207,7 @@ provincesGroup.eachLayer(function (layer) {
             zoomDelta: 0.51,
             wheelPxPerZoomLevel: 600,
             center: youAreHere,
-            layers: [citiesGroup, landmarksGroup, youAreHereGroup, provincesGroup],
+            layers: [citiesGroup, youAreHereGroup],
         });
 
 
@@ -267,9 +267,10 @@ fetch('./geojsonData/Villes.geojson')
             "Provinces": provincesGroup
         }).addTo(map);
 
+        //pour activer
         youAreHereGroup.addTo(map);
 
-        // Pour la désactiver
+        // Pour désactiver
         landmarksGroup.removeFrom(map);
 
         var drawnItems = new L.FeatureGroup();
@@ -302,7 +303,7 @@ fetch('./geojsonData/Villes.geojson')
 
         map.addControl(drawControl);
 
-        map.on('draw:created', function(e) {
+      /*  map.on('draw:created', function(e) {
             var type = e.layerType;
             var layer = e.layer;
 
@@ -311,7 +312,7 @@ fetch('./geojsonData/Villes.geojson')
             }
 
             drawnItems.addLayer(layer);
-        });
+        });*/
 
         map.on('draw:created', function(e) {
             var type = e.layerType;
